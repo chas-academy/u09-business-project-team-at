@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom";
 import { Component } from "react";
 
 type ButtonProps = {
   onClick?: () => void;
+  to?: string;
   children?: React.ReactNode;
   variant?: "primary" | "secondary" | "transparent" | "danger";
+  renderType?: "button" | "link";
 };
 
 const baseClasses =
@@ -20,8 +23,21 @@ const variantClasses = {
 
 export default class Button extends Component<ButtonProps> {
   render() {
-    const { onClick, children, variant = "primary" } = this.props;
+    const {
+      onClick,
+      children,
+      variant = "primary",
+      renderType = "button",
+    } = this.props;
     const classes = `${baseClasses} ${variantClasses[variant]}`;
+
+    if (renderType === "link") {
+      return (
+        <Link to={this.props.to || "#"} className={classes}>
+          {children}
+        </Link>
+      );
+    }
     return (
       <button className={classes} onClick={onClick}>
         {children}
