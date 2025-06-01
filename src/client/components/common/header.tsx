@@ -28,32 +28,35 @@ const baseClasses =
   "flex gap-12 px-8 py-4 bg-black text-white items-center text-base rounded-2xl";
 
 const navItemClasses =
-  "cursor-pointer hover:text-black bg-transparent hover:bg-white rounded-2xl  px-4 py-4 leading-[12.8px] ";
+  "cursor-pointer hover:text-black bg-transparent hover:bg-white rounded-2xl px-4 py-4 leading-[12.8px]";
 
 export default class Header extends Component<HeaderProps> {
   render() {
     const { onClick, variants = "guest" } = this.props;
-    const classes = ${baseClasses};
+    const classes = `${baseClasses}`;
 
     return (
       <header className="flex justify-center mx-auto mt-16">
         <nav>
           <ul className={classes}>
-            <li
-              onClick={() => onClick?.("Path")}
-              className="text-[32px] font-bold cursor-pointer"
-            >
-              Recifood
+            <li>
+              <a className="text-[32px] font-bold cursor-pointer"> Recifood</a>
             </li>
             <div className="flex gap-3">
-              <li onClick={() => onClick?.("Path")} className={navItemClasses}>
-                Recipes
+              <li>
+                <a href="#" className={navItemClasses}>
+                  Recipes
+                </a>
               </li>
-              <li onClick={() => onClick?.("Path")} className={navItemClasses}>
-                Trending
+              <li>
+                <a href="#" className={navItemClasses}>
+                  Trending
+                </a>
               </li>
-              <li onClick={() => onClick?.("Path")} className={navItemClasses}>
-                Recommendation
+              <li>
+                <a href="#" className={navItemClasses}>
+                  Recommendation
+                </a>
               </li>
             </div>
             {renderVariantButton(variants)}
