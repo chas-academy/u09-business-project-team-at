@@ -5,16 +5,18 @@ import Recommendation from "./pages/recommendation";
 import Recipes from "./pages/recipes";
 import Trending from "./pages/trending";
 import Header from "./components/common/header";
+import Profile from "./pages/profile";
 
 function App() {
   return (
     <Router>
-      <Header />
+      <Header variants="user" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/trending" element={<Trending />} />
         <Route path="/recommendation" element={<Recommendation />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
