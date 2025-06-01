@@ -1,15 +1,26 @@
-import "./App.css";
-
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/home";
+import Recommendation from "./pages/recommendation";
+import Recipes from "./pages/recipes";
+import Trending from "./pages/trending";
+import Header from "./components/common/header";
+import Profile from "./pages/profile";
 import Button from "./components/common/button";
+
 
 function App() {
   return (
-    <div className="gap-2 flex ">
-      <Button variant="primary">Primary</Button>
-      <Button variant="danger">Danger</Button>
-      <Button variant="transparent">Transparent</Button>
-      <Button variant="secondary">Secondary</Button>
-    </div>
+    <Router>
+      <Header variants="user" />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/recipes" element={<Recipes />} />
+        <Route path="/trending" element={<Trending />} />
+        <Route path="/recommendation" element={<Recommendation />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+    </Router>
   );
 }
 
