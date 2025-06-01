@@ -2,7 +2,6 @@ import { Component } from "react";
 import Button from "./button";
 
 type HeaderProps = {
-  onClick?: (section: string) => void;
   variants?: "guest" | "user";
 };
 
@@ -32,7 +31,7 @@ const navItemClasses =
 
 export default class Header extends Component<HeaderProps> {
   render() {
-    const { onClick, variants = "guest" } = this.props;
+    const { variants = "guest" } = this.props;
     const classes = `${baseClasses}`;
 
     return (
