@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 import Button from "./button";
 
 type HeaderProps = {
@@ -16,7 +17,9 @@ const renderVariantButton = (variant: "guest" | "user") => {
   if (variant === "user") {
     return (
       <li>
-        <Button variant="secondary">Profile</Button>
+        <Button renderType="link" to="/profile" variant="secondary">
+          Profile
+        </Button>
       </li>
     );
   }
@@ -39,23 +42,25 @@ export default class Header extends Component<HeaderProps> {
         <nav>
           <ul className={classes}>
             <li>
-              <a className="text-[32px] font-bold cursor-pointer">Recifood</a>
+              <Link to="/" className="text-[32px] font-bold cursor-pointer">
+                Recifood
+              </Link>
             </li>
             <div className="flex gap-3">
               <li>
-                <a href="#" className={navItemClasses}>
+                <Link to="/recipes" className={navItemClasses}>
                   Recipes
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className={navItemClasses}>
+                <Link to="/trending" className={navItemClasses}>
                   Trending
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className={navItemClasses}>
+                <Link to="/recommendation" className={navItemClasses}>
                   Recommendation
-                </a>
+                </Link>
               </li>
             </div>
             {renderVariantButton(variants)}
