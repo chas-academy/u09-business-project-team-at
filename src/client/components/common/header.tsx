@@ -39,7 +39,7 @@ export default class Header extends Component<HeaderProps> {
         <nav>
           <ul className={classes}>
             <li>
-              <a className="text-[32px] font-bold cursor-pointer"> Recifood</a>
+              <a className="text-[32px] font-bold cursor-pointer">Recifood</a>
             </li>
             <div className="flex gap-3">
               <li>
