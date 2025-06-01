@@ -6,6 +6,8 @@ import Recipes from "./pages/recipes";
 import Trending from "./pages/trending";
 import Header from "./components/common/header";
 import Profile from "./pages/profile";
+import Button from "./components/common/button";
+
 
 function App() {
   return (
