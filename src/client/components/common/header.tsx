@@ -9,7 +9,7 @@ type HeaderProps = {
   variants?: "guest" | "user";
 };
 
-type TestState = {
+type menuState = {
   menuState: "menu" | "close";
 };
 
@@ -40,7 +40,7 @@ const navLinks = [
   { name: "TRENDING", to: "/trending" },
   { name: "RECOMMENDATION", to: "/recommendation" },
 ];
-export default class Test extends Component<HeaderProps, TestState> {
+export default class Test extends Component<HeaderProps, menuState> {
   constructor(props: HeaderProps) {
     super(props);
     this.state = {
