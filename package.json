@@ -10,15 +10,18 @@
     "lint": "eslint src"
   },
   "dependencies": {
+    "@ionic/react": "^8.5.8",
     "@tailwindcss/vite": "^4.1.8",
     "cross-env": "^7.0.3",
     "express": "^5.1.0",
+    "ionicons": "^8.0.8",
     "mongoose": "^8.15.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-ionicons": "^4.2.1",
     "react-router-dom": "^7.6.1",
-    "ts-dotenv": "^0.9.1",
     "tailwindcss": "^4.1.8",
+    "ts-dotenv": "^0.9.1",
     "tsx": "^4.19.3",
     "typescript": "^5.8.3",
     "vite-express": "*"
