@@ -60,28 +60,34 @@ export default class Test extends Component<HeaderProps, menuState> {
     const navLinksClasses = "text-base hover:text-[#6DBE45] duration-500";
 
     return (
-      <nav className="p-5 text-base text-white bg-black shadow md:flex md:items-center md:justify-between">
-        <div className="flex justify-between items-center">
-          <Link to="/" className="text-[32px] cursor-pointer">
-            Recifood
-          </Link>
+      <header className="bg-black h-24 z-[15]">
+        <nav className=" md:max-w-7xl mx-auto px-4 xl:px-0 py-5 text-base text-white bg-black shadow md:flex md:items-center md:justify-between">
+          <div className="flex justify-between items-center">
+            <Link to="/" className="text-[32px] cursor-pointer">
+              Recifood
+            </Link>
 
-          <span className="text-3xl cursor-pointer mx-2 md:hidden block">
-            <IonIcon icon={menu} onClick={this.toggleMenu}></IonIcon>
-          </span>
-        </div>
+            <span className="text-3xl cursor-pointer mx-2 md:hidden block">
+              <IonIcon icon={menu} onClick={this.toggleMenu}></IonIcon>
+            </span>
+          </div>
 
-        <ul className="md:flex md:items-center z-[-1] md:z-auto md:static absolute bg-black w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
-          {navLinks.map((link) => (
-            <li key={link.name} className="mx-4 my-6 md:my-0">
-              <Link to={link.to} className={navLinksClasses}>
-                {link.name}
-              </Link>
-            </li>
-          ))}
-          {renderVariantButton(variants)}
-        </ul>
-      </nav>
+          <ul className="md:flex md:items-center z-[10] md:z-auto md:static absolute bg-black w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[70px] transition-all ease-in duration-200">
+            {navLinks.map((link) => (
+              <li key={link.name} className="mx-4 my-6 md:my-0">
+                <Link
+                  to={link.to}
+                  className={navLinksClasses}
+                  onClick={this.toggleMenu}
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+            {renderVariantButton(variants)}
+          </ul>
+        </nav>
+      </header>
     );
   }
 }
