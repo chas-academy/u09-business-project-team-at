@@ -52,6 +52,7 @@ const navLinks = [
 export default class Test extends Component<HeaderProps, menuState> {
   constructor(props: HeaderProps) {
     super(props);
+    this.toggleMenu = this.toggleMenu.bind(this);
     this.state = {
       menuState: "close",
     };
@@ -63,12 +64,6 @@ export default class Test extends Component<HeaderProps, menuState> {
       handleMenu({ name: this.state.menuState });
     });
   };
-
-  // closeMenu = () => {
-  //   this.setState({ menuState: "close" }, () => {
-  //     handleMenu({ name: "close" });
-  //   });
-  // };
 
   render() {
     const { variants = "guest" } = this.props;
