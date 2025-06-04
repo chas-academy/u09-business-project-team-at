@@ -12,7 +12,7 @@ type BannerProps = {
 };
 
 const baseClasses =
-  "flex flex-col sm:flex-row items-center text-white bg-black w-auto sm:mx-4 xl:mx-0";
+  "flex flex-col sm:flex-row items-center text-white bg-black w-auto  xl:mx-0";
 export default class Banner extends Component<BannerProps> {
   render() {
     const { title, description, alt, subtitle, buttonText, image, to } =
