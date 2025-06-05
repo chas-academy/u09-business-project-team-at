@@ -17,8 +17,7 @@ const renderVariantButton = (variant: "guest" | "user") => {
   if (variant === "guest") {
     return (
       <li className="mx-4 my-4">
-        {" "}
-        <Button variant="secondary">Sign in</Button>{" "}
+        <Button variant="secondary">Sign in</Button>
       </li>
     );
   }
