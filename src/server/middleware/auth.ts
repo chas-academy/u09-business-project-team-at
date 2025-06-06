@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { load } from "ts-dotenv";
 import { handleHttpError, HttpError } from "../HttpError.ts";
-import { User } from "../db/User.ts";
+import { UserModel } from "../db/User.ts";
 
 const env = load({
     JWT_SECRET:String,
@@ -10,7 +10,7 @@ const env = load({
 
 export const authorize = async (req:Request, res:Response, next:NextFunction) => {
     try {
-        await User.findById(req.params.id).orFail(new HttpError(404, "User not found"));
+        await UserModel.findById(req.params.id).orFail(new HttpError(404, "User not found"));
         const token = req.header("Authorization")?.replace("Bearer ", "");
         if (!token) {
             res.status(401).end();

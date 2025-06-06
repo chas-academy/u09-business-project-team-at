@@ -37,9 +37,9 @@ async function handleHttpError(error:any, res:Response) {
         res.status(error.status).json({ error: error.message }).end();
     } else if (error instanceof Error) {
         const newError = HttpError.fromError(error);
-        res.status(newError.status).json({ error: newError.message });
+        res.status(newError.status).json({ error: newError.message }).end();
     } else {
-        res.status(418).json({ error: "your errors have errors" });
+        res.status(418).json({ error: "your errors have errors" }).end();
     }
 }
 
