@@ -33,16 +33,12 @@ export default class RecipeCard extends Component<RecipeCardProps> {
 
     return (
       <div
-        className="w-50
-       sm:w-72 flex flex-col transition hover:scale-103 gap-2 md:gap-4 h-auto overflow-hidden"
+        className="
+        flex flex-col items-center sm:w-auto  max-w-100 transition hover:scale-103 gap-2 md:gap-4 h-auto overflow-hidden"
       >
         <Link to={`/recipe/${id}`}>
           <div className="relative">
-            <img
-              src={image}
-              alt={title}
-              className=" w-full h-60 sm:h-94 object-cover"
-            />
+            <img src={image} alt={title} className=" w-full object-cover" />
             <div className="absolute bottom-0 left-0">
               <p className="bg-[#FFFFFF80] font-bold text-xs md:text-sm py-2 px-2">
                 {category}
