@@ -17,7 +17,7 @@ const variantClasses = {
   secondary:
     "bg-white text-black hover:bg-transparent hover:border-white hover:text-white",
   transparent:
-    "bg-transparent border-solid border-black text-black hover:bg-black hover:text-white",
+    "bg-transparent border-solid border-black text-black focus:bg-black focus:text-white hover:bg-black hover:text-white",
   danger: "bg-[#EB634B] text-white hover:bg-[#C14A32]",
 };
 
