@@ -1,13 +1,10 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/home";
-import Recommendation from "./pages/recommendation";
 import DetailRecipe from "./pages/details-recipe";
 import Recipes from "./pages/recipes";
-import Trending from "./pages/trending";
-import Header from "./components/common/header";
+import Header from "./components/molecules/header";
 import Profile from "./pages/profile";
-import Categories from "./pages/categories";
+import Trending from "./pages/trending";
 
 function App() {
   return (
@@ -16,11 +13,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/recipes" element={<Recipes />} />
-        <Route path="/trending" element={<Trending />} />
-        <Route path="/recommendation" element={<Recommendation />} />
         <Route path="/recipe/:id" element={<DetailRecipe />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/categories" element={<Categories />} />
+        <Route path="/trending" element={<Trending />} />
       </Routes>
     </Router>
   );
