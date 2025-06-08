@@ -33,7 +33,7 @@ export default class Button extends Component<ButtonProps> {
 
     if (renderType === "link") {
       return (
-        <Link to={this.props.to || "#"} className={classes}>
+        <Link to={this.props.to || "#"} className={classes} onClick={onClick}>
           {children}
         </Link>
       );

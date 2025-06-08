@@ -3,6 +3,7 @@ import SectionGrid from "../components/recipe/section-grid";
 import RecipeCard from "../components/recipe/recipe-card";
 import { RecipeService } from "../services/recipe.service";
 import { Recipes, Recipe } from "../models/recipe.model";
+import Banner from "../components/recipe/banner";
 
 const Profile = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -26,7 +27,8 @@ const Profile = () => {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div>
+    <div className="mt-65 md:px-4 xl:px-0 w-full max-w-7xl mx-auto">
+      {" "}
       <SectionGrid>
         {recipes.map((recipe: Recipe, index: number) => (
           <RecipeCard
@@ -40,6 +42,15 @@ const Profile = () => {
           />
         ))}
       </SectionGrid>
+      <Banner
+        title="What's in Your Kitchen?"
+        subtitle="New Feature"
+        description="Enter the ingredients you have, and we’ll match you with delicious recipes you can make right now — no extra shopping needed."
+        buttonText="LEARN MORE"
+        image="https://i.gyazo.com/13e9d337fb6332689c870d65959a2882.png"
+        alt="Fridge"
+        to="/recommendation"
+      />
     </div>
   );
 };
