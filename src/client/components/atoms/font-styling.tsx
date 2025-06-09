@@ -16,15 +16,16 @@ type FontProps = {
 };
 
 const variantClasses = {
-  //Page  styles
+  //Page font styles
   mainTitle: "font-bold text-3xl md:text-4xl lg:text-5xl",
   sectionTitle: "font-semibold text-2xl md:text-3xl lg:text-4xl",
-  // Recipe styles
+
+  // Recipe font styles
   recipeTitle: "font-medium text-lg md:text-xl",
   recipeInfo: "text-base",
   recipeCategory: "bg-[#FFFFFF80] font-bold text-xs md:text-sm py-2 px-2",
 
-  // Banner styles
+  // Banner font styles
   bannerTitle:
     "text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 xs:mb-3 sm:mb-4",
   bannerSubtitle: "text-xs xs:text-sm sm:text-base md:text-lg mb-2 xs:mb-3",
