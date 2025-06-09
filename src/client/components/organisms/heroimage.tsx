@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { RecipeService } from "../../services/recipe.service";
 import { Recipe } from "../../models/recipe.model";
 import HeroImageLandingPage from "../molecules/hero-image-landing-page";
+import { IonIcon } from "@ionic/react";
+import { chevronDownOutline } from "ionicons/icons";
 
 export default function HeroImage() {
   const [recipe, setRecipe] = useState<Recipe>();
@@ -26,12 +28,17 @@ export default function HeroImage() {
   if (!recipe) return <div>Recipe undefined</div>;
 
   return (
-    <>
-      <HeroImageLandingPage
-        recipeTitle={recipe.name}
-        src={recipe.image}
-        id={recipe.id}
-      />
-    </>
+    <div className="flex text-center flex-col gap-12">
+      <div>
+        <HeroImageLandingPage
+          recipeTitle={recipe.name}
+          src={recipe.image}
+          id={recipe.id}
+        />
+      </div>
+      <div>
+        <IonIcon icon={chevronDownOutline}></IonIcon>
+      </div>
+    </div>
   );
 }
