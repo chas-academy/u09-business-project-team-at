@@ -12,10 +12,11 @@ import RecipeCard from "../molecules/recipe-card";
 import Button from "../atoms/button";
 import { IonIcon } from "@ionic/react";
 import { chevronDownOutline } from "ionicons/icons";
+import RecipeCards from "../organisms/recipe-cards";
 
 // services for fetching external data
 import { RecipeService } from "../../services/recipe.service";
-import { Recipes, Recipe } from "../../models/recipe.model";
+import { Recipe } from "../../models/recipe.model";
 
 export default function Categories() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -88,7 +89,20 @@ export default function Categories() {
     }
   }, [onPhoneWindowSize, allTags, winSize]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div className="mt-6.5 md:px-4 xl:px-0 w-full max-w-7xl mx-auto">
+        <div
+          className=" grid justify-items-center
+           grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 pt-4 gap-y-8 gap-x-4"
+        >
+          {Array.from({ length: 24 }).map((_, index) => (
+            <RecipeCard key={index} isLoading={true} />
+          ))}
+        </div>
+      </div>
+    );
+  }
   if (error) return <div>Error: {error.message}</div>;
 
   return (
@@ -180,22 +194,7 @@ export default function Categories() {
         )}
       </div>
 
-      <div
-        className=" grid justify-items-center
-           grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 pt-4 gap-y-8 gap-x-4"
-      >
-        {recipes.map((recipe: Recipe, index: number) => (
-          <RecipeCard
-            id={recipe.id}
-            key={index}
-            title={recipe.name}
-            image={recipe.image}
-            category={recipe.cuisine}
-            cookTimeMinutes={recipe.cookTimeMinutes}
-            rating={recipe.rating}
-          />
-        ))}
-      </div>
+      <RecipeCards recipes={recipes} />
     </>
   );
 }

@@ -3,14 +3,20 @@ import Rating from "@mui/material/Rating";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import FontStyled from "../atoms/font-styling";
+import Skeleton from "@mui/material/Skeleton";
 
-type RecipeCardProps = {
+type Recipe = {
   title: string;
   image: string;
   category?: string;
   cookTimeMinutes?: number;
   rating?: number;
   id: number;
+};
+
+type RecipeCardProps = {
+  recipe?: Recipe;
+  isLoading?: boolean;
 };
 
 const theme = createTheme({
@@ -30,7 +36,22 @@ const theme = createTheme({
 
 export default class RecipeCard extends Component<RecipeCardProps> {
   render() {
-    const { title, image, category, rating, cookTimeMinutes, id } = this.props;
+    const { isLoading } = this.props;
+    const { title, image, category, rating, cookTimeMinutes, id } =
+      this.props.recipe || {};
+
+    if (isLoading) {
+      return (
+        <div>
+          <div
+            className="
+        flex flex-col items-center sm:w-auto  max-w-100 transition hover:scale-103 gap-2 md:gap-4 h-auto overflow-hidden"
+          >
+            <Skeleton variant="rectangular" width={200} height={250} />
+          </div>
+        </div>
+      );
+    }
 
     return (
       <div
