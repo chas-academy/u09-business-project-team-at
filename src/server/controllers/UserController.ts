@@ -55,7 +55,7 @@ export const viewUserPrivate = async (req:Request, res:Response) => {
     } catch(e) {
         handleHttpError(e, res);
     }
-}
+};
 
 export const editUser = async (req:Request, res:Response) => {
     try {
