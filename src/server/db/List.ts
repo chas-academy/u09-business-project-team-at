@@ -13,7 +13,7 @@ export class List extends TimeStamps implements Base {
     public description?: string;
 
     @prop({ type: () => [String] })
-    public recipies: string[] = [];
+    public recipes: string[] = [];
 }
 
 export const ListModel = getModelForClass(List);

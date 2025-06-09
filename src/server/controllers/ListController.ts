@@ -44,7 +44,7 @@ export const updateList = async (req:Request, res:Response) => {
                 list.description = desc;
             }
             if (recipies) {
-                list.recipies = recipies;
+                list.recipes = recipies;
             }
             await list.save();
             res.status(200).json(list).end();
