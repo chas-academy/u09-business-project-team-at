@@ -10,7 +10,7 @@ export default function HomeTemplate() {
       {/* <LineDivider /> */}
       <FontStyled variant="sectionTitle">All Recipes</FontStyled>
       <Carusel RenderType="recipes" />
-
+      <LineDivider />
       <FontStyled variant="sectionTitle">New Feature</FontStyled>
       <Banner
         title="What's in Your Kitchen?"

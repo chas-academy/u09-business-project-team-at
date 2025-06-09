@@ -38,6 +38,7 @@ export default function TrendingTemplate() {
     <div className="mt-6.5 mb-20 md:px-4 xl:px-0 w-full max-w-7xl flex flex-col gap-12 mx-auto">
       <FontStyled variant="mainTitle">Trending Recipes</FontStyled>
       <RecipeCards recipes={recipes} />
+      <LineDivider />
       <FontStyled variant="sectionTitle">New Feature</FontStyled>
       <Banner
         title="What's in Your Kitchen?"
