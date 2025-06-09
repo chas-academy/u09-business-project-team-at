@@ -1,3 +1,4 @@
+import { get } from "http";
 import { Recipe, Recipes } from "../models/recipe.model";
 
 export const RECIPE_ENDPOINT_BASE = "https://dummyjson.com/recipes";
@@ -23,6 +24,16 @@ export const RecipeRepository = {
     const response = await fetch(`${RECIPE_ENDPOINT_BASE}/tag/${tag}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch recipes with tag ${tag}`);
+    }
+    return response.json();
+  },
+
+  async getTrendingRecipes(): Promise<Recipes> {
+    const response = await fetch(
+      `${RECIPE_ENDPOINT_BASE}?sortBy=rating&order=desc&limit=12`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch trending recipes");
     }
     return response.json();
   },

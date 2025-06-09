@@ -20,4 +20,8 @@ export const RecipeService = {
   async getTags(): Promise<string[]> {
     return await RecipeRepository.getAllTags();
   },
+  // Fetches trending recipes
+  async getTrendingRecipes(): Promise<Recipes> {
+    return await RecipeRepository.getTrendingRecipes();
+  },
 };
