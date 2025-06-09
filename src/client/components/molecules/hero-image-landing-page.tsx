@@ -15,7 +15,7 @@ export default class HeroImageLandingPage extends Component<ButtonProps> {
     return (
       <div
         style={{ backgroundImage: `url('${src}')` }}
-        className={`aspect-3/2 bg-cover bg-center sm:h-195.5 w-full object-cover bg-no-repeat sm:bg-cover flex flex-col items-center- justify-center shadow-md relative`}
+        className={`aspect-3/2 bg-cover bg-center sm:h-170.5 w-full object-cover bg-no-repeat sm:bg-cover flex flex-col items-center- justify-center shadow-md relative`}
       >
         <div className="absolute bg-[#D9D9D980] flex flex-col items-center gap-2 bottom-0 left-1/2 transform -translate-x-1/2 p-4 rounded-lg">
           <FontStyled variant="heroImageTitle">{recipeTitle}</FontStyled>
