@@ -6,7 +6,6 @@ import {
   MenuHandler,
   MenuList,
   MenuItem,
-  Input,
 } from "@material-tailwind/react";
 import RecipeCard from "../molecules/recipe-card";
 import Button from "../atoms/button";
@@ -25,16 +24,11 @@ export default function Categories() {
   const [tags, setTags] = useState<string[]>([]);
   const [winSize, setWinSize] = useState(0);
   const [allTags, setAllTags] = useState<string[]>([]);
+  const [firstRender, setFirstRender] = useState(true);
 
-  const fetchRecipes = async (tag?: string) => {
+  const fetchRecipes = async () => {
     try {
-      if (!tag) {
-        const response = await RecipeService.getRecipes();
-        setRecipes(response.recipes);
-        setLoading(false);
-        return;
-      }
-      const response = await RecipeService.getRecipesByTag(tag);
+      const response = await RecipeService.getRecipes();
       setRecipes(response.recipes);
       setLoading(false);
     } catch (err) {
@@ -109,7 +103,7 @@ export default function Categories() {
     <>
       <div className="flex gap-4 md:overflow-hidden flex-row w-full justify-center items-center  max-h-9 mx-auto">
         <Button
-          variant="transparent"
+          variant={firstRender ? "render" : "transparent"}
           children="All"
           onClick={() => {
             fetchRecipes();
@@ -125,6 +119,7 @@ export default function Categories() {
               RecipeService.getRecipesByTag(tag) // get data
                 .then((response) => {
                   setRecipes(response.recipes); // store data
+                  setFirstRender(false);
                 })
                 .catch((err) => {
                   setError(err as Error);

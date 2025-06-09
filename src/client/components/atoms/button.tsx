@@ -5,7 +5,7 @@ type ButtonProps = {
   onClick?: () => void;
   to?: string;
   children?: React.ReactNode;
-  variant?: "primary" | "secondary" | "transparent" | "danger";
+  variant?: "primary" | "secondary" | "transparent" | "danger" | "render";
   renderType?: "button" | "link";
   className?: string;
 };
@@ -21,6 +21,8 @@ const variantClasses = {
   transparent:
     "bg-transparent border-solid border-black text-black focus:bg-black focus:text-white hover:bg-black hover:text-white",
   danger: "bg-[#EB634B] text-white hover:bg-[#C14A32]",
+
+  render: "bg-black border-solid text-white border-black ",
 };
 
 export default class Button extends Component<ButtonProps> {
