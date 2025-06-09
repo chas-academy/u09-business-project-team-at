@@ -1,8 +1,12 @@
-import Categories from "../organisms/categories";
 import Banner from "../molecules/banner";
+import Carusel from "../organisms/carusel";
+import FontStyled from "../atoms/font-styling";
+import LineDivider from "../atoms/line-divider";
 export default function ProfileTemplate() {
   return (
     <div className="mt-6.5 mb-20 md:px-4 xl:px-0 w-full max-w-7xl flex flex-col gap-12 mx-auto">
+      <LineDivider />
+      <FontStyled variant="sectionTitle">New Feature</FontStyled>
       <Banner
         title="What's in Your Kitchen?"
         subtitle="New Feature"
@@ -12,6 +16,9 @@ export default function ProfileTemplate() {
         alt="Fridge"
         to="/recommendation"
       />
+      <LineDivider />
+      <FontStyled variant="sectionTitle">Trending Recipes</FontStyled>
+      <Carusel RenderType="trending" />
     </div>
   );
 }
