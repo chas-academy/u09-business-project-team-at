@@ -7,17 +7,19 @@ type ButtonProps = {
   children?: React.ReactNode;
   variant?: "primary" | "secondary" | "transparent" | "danger";
   renderType?: "button" | "link";
+  className?: string;
 };
 
 const baseClasses =
-  "px-6 py-2 font-bold rounded transition-colors duration-500 leading-[12.8px] text-[14px] border-2 border-transparent cursor-pointer";
+  "px-6 py-2 font-bold rounded transition-colors duration-500 leading-[12.8px] text-[14px] border-2  cursor-pointer";
 
 const variantClasses = {
-  primary: "bg-black text-white hover:bg-white hover:text-black",
+  primary:
+    "bg-black border-black hover:border-white border-solid text-white hover:bg-white hover:text-black",
   secondary:
     "bg-white text-black hover:bg-transparent hover:border-white hover:text-white",
   transparent:
-    "bg-transparent border-2 border-black text-black hover:bg-black hover:text-white",
+    "bg-transparent border-solid border-black text-black focus:bg-black focus:text-white hover:bg-black hover:text-white",
   danger: "bg-[#EB634B] text-white hover:bg-[#C14A32]",
 };
 
@@ -28,8 +30,9 @@ export default class Button extends Component<ButtonProps> {
       children,
       variant = "primary",
       renderType = "button",
+      className = "",
     } = this.props;
-    const classes = `${baseClasses} ${variantClasses[variant]}`;
+    const classes = `${baseClasses} ${variantClasses[variant]} ${className}`;
 
     if (renderType === "link") {
       return (

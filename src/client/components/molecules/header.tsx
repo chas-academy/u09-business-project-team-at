@@ -3,7 +3,7 @@ import { IonIcon } from "@ionic/react";
 import { menu } from "ionicons/icons";
 import { handleMenu } from "../../js/menu";
 import { Link } from "react-router-dom";
-import Button from "./button";
+import Button from "../atoms/button";
 
 type HeaderProps = {
   variants?: "guest" | "user";
@@ -11,6 +11,7 @@ type HeaderProps = {
 
 type menuState = {
   menuState: "menu" | "close";
+  showMenu: boolean;
 };
 
 const renderVariantButton = (
@@ -19,7 +20,7 @@ const renderVariantButton = (
 ) => {
   if (variant === "guest") {
     return (
-      <li className="mx-4 my-4">
+      <li className="mx-4 my-4 mr-0">
         <Button variant="secondary" onClick={toggleMenu}>
           Sign in
         </Button>
@@ -28,7 +29,7 @@ const renderVariantButton = (
   }
   if (variant === "user") {
     return (
-      <li className="mx-4 my-4">
+      <li className="mx-4 my-4 mr-0">
         <Button
           onClick={toggleMenu}
           renderType="link"
@@ -47,22 +48,57 @@ const navLinks = [
   { name: "HOME", to: "/" },
   { name: "RECIPES", to: "/recipes" },
   { name: "TRENDING", to: "/trending" },
-  { name: "RECOMMENDATION", to: "/recommendation" },
 ];
 export default class Test extends Component<HeaderProps, menuState> {
+  mediaQuery: MediaQueryList;
+
   constructor(props: HeaderProps) {
     super(props);
     this.toggleMenu = this.toggleMenu.bind(this);
+    this.setShowMenu = this.setShowMenu.bind(this);
+    this.handleMediaQueryChange = this.handleMediaQueryChange.bind(this);
+    this.mediaQuery = window.matchMedia("(max-width: 768px)");
     this.state = {
       menuState: "close",
+      showMenu: !this.mediaQuery.matches,
     };
   }
 
+  componentDidMount() {
+    this.mediaQuery.addEventListener("change", this.handleMediaQueryChange);
+  }
+
+  componentWillUnmount() {
+    this.mediaQuery.removeEventListener("change", this.handleMediaQueryChange);
+  }
+
+  handleMediaQueryChange = () => {
+    this.setState({
+      menuState: "close",
+      showMenu: !this.mediaQuery.matches,
+    });
+  };
+  setShowMenu = (menuState: "menu" | "close") => {
+    this.setState({
+      showMenu:
+        (this.mediaQuery.matches && menuState === "menu") ||
+        !this.mediaQuery.matches,
+    });
+  };
+
   toggleMenu = () => {
     const newState = this.state.menuState === "menu" ? "close" : "menu";
-    this.setState({ menuState: newState }, () => {
-      handleMenu({ name: this.state.menuState });
-    });
+    this.setState(
+      {
+        menuState: newState,
+        showMenu:
+          (this.mediaQuery.matches && newState === "menu") ||
+          !this.mediaQuery.matches,
+      },
+      () => {
+        handleMenu({ name: this.state.menuState });
+      }
+    );
   };
 
   render() {
@@ -82,21 +118,23 @@ export default class Test extends Component<HeaderProps, menuState> {
             </span>
           </div>
 
-          <ul className="md:flex md:items-center z-[10] md:z-auto md:static absolute bg-black w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-4 md:opacity-100 opacity-0 top-[70px] transition-all ease-in duration-200">
-            {navLinks.map((link) => (
-              <li key={link.name} className="mx-4 my-6 md:my-0">
-                <Link
-                  to={link.to}
-                  className={navLinksClasses}
-                  onClick={this.toggleMenu}
-                >
-                  {link.name}
-                </Link>
-              </li>
-            ))}
+          {this.state.showMenu && (
+            <ul className="md:flex md:items-center z-[10] md:z-auto md:static absolute bg-black w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-4 md:opacity-100 opacity-0 top-[70px] transition-all ease-in duration-200">
+              {navLinks.map((link) => (
+                <li key={link.name} className="mx-4 my-6 md:my-0">
+                  <Link
+                    to={link.to}
+                    className={navLinksClasses}
+                    onClick={this.toggleMenu}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
 
-            {renderVariantButton(variants, this.toggleMenu)}
-          </ul>
+              {renderVariantButton(variants, this.toggleMenu)}
+            </ul>
+          )}
         </nav>
       </header>
     );

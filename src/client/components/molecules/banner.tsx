@@ -1,5 +1,6 @@
 import { Component } from "react";
-import Button from "../common/button";
+import Button from "../atoms/button";
+import FontStyled from "../atoms/font-styling";
 
 type BannerProps = {
   title: string;
@@ -34,18 +35,12 @@ export default class Banner extends Component<BannerProps> {
          xs:gap-4 sm:gap-6 md:gap-8 w-full sm:w-1/2"
         >
           <div className="w-full">
-            <h3 className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-2 xs:mb-3 sm:mb-4">
-              {title}
-            </h3>
+            <FontStyled variant="bannerTitle">{title}</FontStyled>
             {subtitle && (
-              <p className="text-xs xs:text-sm sm:text-base md:text-lg mb-2 xs:mb-3">
-                {subtitle}
-              </p>
+              <FontStyled variant="bannerSubtitle">{subtitle}</FontStyled>
             )}
           </div>
-          <p className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl">
-            {description}
-          </p>
+          <FontStyled variant="bannerDesc">{description}</FontStyled>
           {buttonText && to && (
             <Button renderType="link" to={to} variant="secondary">
               {buttonText}
