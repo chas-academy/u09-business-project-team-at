@@ -12,7 +12,7 @@ const SectionGrid: React.FC<SectionGridProps> = ({
 }) => {
   const containerClass = classNames(
     className,
-    "hide-scrollbar -mr-4 flex snap-x overflow-x-scroll pr-4 pb-5 *:shrink-0 *:snap-start *:not-[.gradient]:w-64 gap-4 overflow-y-hidden"
+    "hide-scrollbar -mr-4 flex snap-x overflow-x-scroll pr-4 pb-2 sm:pb-5 *:shrink-0 *:snap-start *:not-[.gradient]:w-64 gap-4 overflow-y-hidden"
   );
 
   return (
