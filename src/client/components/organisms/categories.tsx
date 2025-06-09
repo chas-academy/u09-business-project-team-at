@@ -93,7 +93,7 @@ export default function Categories() {
 
   return (
     <>
-      <div className="flex gap-4 md:overflow-hidden flex-row w-full justify-between max-h-9">
+      <div className="flex gap-4 md:overflow-hidden flex-row w-full justify-center items-center  max-h-9 mx-auto">
         <Button
           variant="transparent"
           children="All"
@@ -132,7 +132,7 @@ export default function Categories() {
               <div className="bg-white w-auto justify-center flex items-center">
                 <Button
                   variant="transparent"
-                  className="flex items-center flex-nowrap min-w-24"
+                  className="flex items-center flex-nowrap min-w-36"
                 >
                   Show More
                   <IonIcon icon={chevronDownOutline}></IonIcon>
@@ -140,7 +140,7 @@ export default function Categories() {
               </div>
             </MenuHandler>
 
-            <MenuList className="h-3/4 overflow-y-auto border-2 border-black w-35">
+            <MenuList className="h-3/4 overflow-y-auto border-2 border-black w-32">
               {/* 
               
               TODO: Add search if you have time 
