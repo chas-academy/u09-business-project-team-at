@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { handleHttpError, HttpError } from "../HttpError.ts";
 import { UserModel } from "../db/User.ts";
-import { ListModel } from "../db/List.ts";
+import { List, ListModel } from "../db/List.ts";
 
 export const createList = async (req:Request, res:Response) => {
     try {
@@ -26,6 +26,19 @@ export const viewList = async (req:Request, res:Response) => {
     try {
         const list = await ListModel.findById(req.params.id).orFail(new HttpError(404, "not found"));
         res.status(200).json(list).end();
+    } catch (e) {
+        handleHttpError(e, res);
+    }
+};
+
+export const listList = async (req:Request, res:Response) => {
+    try {
+        const user = await UserModel.findById(req.params.id).orFail(new HttpError(404, "user not found"));
+        const lists: List[] = [];
+        user.lists.forEach(async (list) => {
+            lists.push(await ListModel.findById(list).orFail(new HttpError(404, "list not found, somehow")));
+        });
+        res.status(200).json(lists).end();
     } catch (e) {
         handleHttpError(e, res);
     }
