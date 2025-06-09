@@ -2,12 +2,15 @@ import Categories from "../organisms/categories";
 import Banner from "../molecules/banner";
 import CaruselTemplate from "../organisms/carusel";
 import FontStyled from "../atoms/font-styling";
+import LineDivider from "../atoms/line-divider";
 
 export default function RecipesTemplate() {
   return (
-    <div className="mt-6.5 md:px-4 xl:px-0 w-full max-w-7xl mx-auto flex flex-col gap-12">
+    <div className="mt-6.5 mb-20 md:px-4 xl:px-0 w-full max-w-7xl flex flex-col gap-12 mx-auto">
       <FontStyled variant="mainTitle">Explore Our Recipe Collection</FontStyled>
       <Categories />
+      <LineDivider />
+      <FontStyled variant="sectionTitle">New Feature</FontStyled>
       <Banner
         title="What's in Your Kitchen?"
         subtitle="New Feature"
@@ -17,7 +20,9 @@ export default function RecipesTemplate() {
         alt="Fridge"
         to="/recommendation"
       />
-      <CaruselTemplate />
+      <LineDivider />
+      <FontStyled variant="sectionTitle">Trending Recipes</FontStyled>
+      <CaruselTemplate RenderType="trending" />
     </div>
   );
 }
