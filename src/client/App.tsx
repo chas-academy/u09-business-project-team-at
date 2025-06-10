@@ -9,7 +9,7 @@ import Trending from "./pages/trending";
 function App() {
   return (
     <Router>
-      <Header variants="user" />
+      <Header variants="guest" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/recipes" element={<Recipes />} />
