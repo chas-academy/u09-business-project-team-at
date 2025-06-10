@@ -3,17 +3,17 @@ import { getModelForClass, prop } from "@typegoose/typegoose";
 import { Types } from "mongoose";
 
 export class List extends TimeStamps implements Base {
-    public _id!: Types.ObjectId;
-    public id!: string;
+  public _id!: Types.ObjectId;
+  public id!: string;
 
-    @prop({ required: true })
-    public name!: string;
+  @prop({ required: true, type: String })
+  public name!: string;
 
-    @prop()
-    public description?: string;
+  @prop({ type: String })
+  public description?: string;
 
-    @prop({ type: () => [String] })
-    public recipes: string[] = [];
+  @prop({ type: () => [String] })
+  public recipes: string[] = [];
 }
 
 export const ListModel = getModelForClass(List);
