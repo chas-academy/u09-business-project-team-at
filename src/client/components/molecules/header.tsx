@@ -4,6 +4,8 @@ import { menu } from "ionicons/icons";
 import { handleMenu } from "../../js/menu";
 import { Link } from "react-router-dom";
 import Button from "../atoms/button";
+import LoginModal from "./login-modal";
+import SignUpModal from "./signup-modal";
 
 type HeaderProps = {
   variants?: "guest" | "user";
@@ -12,17 +14,19 @@ type HeaderProps = {
 type menuState = {
   menuState: "menu" | "close";
   showMenu: boolean;
+  showModal: "none" | "login" | "signup";
 };
 
 const renderVariantButton = (
   variant: "guest" | "user",
-  toggleMenu: () => void
+  toggleMenu: () => void,
+  openModal: () => void
 ) => {
   if (variant === "guest") {
     return (
       <li className="mx-4 my-0 mr-0">
-        <Button variant="secondary" onClick={toggleMenu}>
-          Sign in
+        <Button variant="secondary" onClick={openModal}>
+          SIGN IN
         </Button>
       </li>
     );
@@ -49,7 +53,7 @@ const navLinks = [
   { name: "RECIPES", to: "/recipes" },
   { name: "TRENDING", to: "/trending" },
 ];
-export default class Test extends Component<HeaderProps, menuState> {
+export default class Header extends Component<HeaderProps, menuState> {
   mediaQuery: MediaQueryList;
 
   constructor(props: HeaderProps) {
@@ -61,8 +65,20 @@ export default class Test extends Component<HeaderProps, menuState> {
     this.state = {
       menuState: "close",
       showMenu: !this.mediaQuery.matches,
+      showModal: "none",
     };
   }
+  openLoginModal = () => {
+    this.setState({ showModal: "login" });
+  };
+
+  openSignUpModal = () => {
+    this.setState({ showModal: "signup" });
+  };
+
+  closeModal = () => {
+    this.setState({ showModal: "none" });
+  };
 
   componentDidMount() {
     this.mediaQuery.addEventListener("change", this.handleMediaQueryChange);
@@ -132,9 +148,23 @@ export default class Test extends Component<HeaderProps, menuState> {
                 </li>
               ))}
 
-              {renderVariantButton(variants, this.toggleMenu)}
+              {renderVariantButton(
+                variants,
+                this.toggleMenu,
+                this.openLoginModal
+              )}
             </ul>
           )}
+          <LoginModal
+            open={this.state.showModal === "login"}
+            onClose={this.closeModal}
+            onSwitchToSignUp={this.openSignUpModal}
+          />
+          <SignUpModal
+            open={this.state.showModal === "signup"}
+            onClose={this.closeModal}
+            onSwitchToSignIn={this.openLoginModal}
+          />
         </nav>
       </header>
     );

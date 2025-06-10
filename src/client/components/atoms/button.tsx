@@ -8,6 +8,7 @@ type ButtonProps = {
   variant?: "primary" | "secondary" | "transparent" | "danger" | "render";
   renderType?: "button" | "link";
   className?: string;
+  type?: "submit";
 };
 
 const baseClasses =
@@ -20,9 +21,10 @@ const variantClasses = {
     "bg-white text-black hover:bg-transparent hover:border-white hover:text-white",
   transparent:
     "bg-transparent border-solid border-black text-black focus:bg-black focus:text-white hover:bg-black hover:text-white",
-  danger: "bg-[#EB634B] text-white hover:bg-[#C14A32]",
+  danger:
+    "bg-[#EB634B] text-white border-solid border-[#EB634B] hover:border-[#C14A32] hover:bg-[#C14A32]",
 
-  render: "bg-black border-solid text-white border-black ",
+  render: "bg-black border-solid  text-white border-black ",
 };
 
 export default class Button extends Component<ButtonProps> {
@@ -32,6 +34,7 @@ export default class Button extends Component<ButtonProps> {
       children,
       variant = "primary",
       renderType = "button",
+      type = "button",
       className = "",
     } = this.props;
     const classes = `${baseClasses} ${variantClasses[variant]} ${className}`;
@@ -44,7 +47,7 @@ export default class Button extends Component<ButtonProps> {
       );
     }
     return (
-      <button className={classes} onClick={onClick}>
+      <button type={type} className={classes} onClick={onClick}>
         {children}
       </button>
     );
