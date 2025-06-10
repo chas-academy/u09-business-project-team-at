@@ -54,74 +54,76 @@ export default function DetailRecipeTemplate() {
 
   return (
     <div className="mt-6.5 mb-20 md:px-4 xl:px-0 w-full max-w-7xl flex flex-col gap-12 mx-auto">
-      <div className="flex flex-col md:flex-row gap-4">
-        {recipe ? (
-          <div className="flex flex-col gap-4">
-            <FontStyled variant="mainTitle">{recipe.name}</FontStyled>
-            <RecipeImage imageUrl={recipe.image} altText={recipe.name} />
-            <div>
-              <FontStyled variant="recipeInfo">
-                <div className="flex gap-4 items-center">
-                  <div>{recipe.cuisine}</div>{" "}
-                  <div className="w-0.5 h-4 bg-black"></div>
-                  <div className="flex items-center">
-                    <ThemeProvider theme={theme}>
-                      <Rating
-                        defaultValue={recipe.rating}
-                        precision={0.5}
-                        size="small"
-                        readOnly
-                        className="flex items-center"
-                      />
-                    </ThemeProvider>
+      <div className="flex flex-col gap-4">
+        {recipe && <FontStyled variant="mainTitle">{recipe.name}</FontStyled>}
+        <div className="flex flex-col md:flex-row gap-x-4">
+          {recipe ? (
+            <div className="flex flex-col gap-4">
+              <RecipeImage imageUrl={recipe.image} altText={recipe.name} />
+              <div>
+                <FontStyled variant="recipeInfo">
+                  <div className="flex gap-4 items-center">
+                    <div>{recipe.cuisine}</div>{" "}
+                    <div className="w-0.5 h-4 bg-black"></div>
+                    <div className="flex items-center">
+                      <ThemeProvider theme={theme}>
+                        <Rating
+                          defaultValue={recipe.rating}
+                          precision={0.5}
+                          size="small"
+                          readOnly
+                          className="flex items-center"
+                        />
+                      </ThemeProvider>
+                    </div>
+                    <div className="w-0.5 h-4 bg-black"></div>
+                    <div>{recipe.cookTimeMinutes} min</div>
                   </div>
-                  <div className="w-0.5 h-4 bg-black"></div>
-                  <div>{recipe.cookTimeMinutes} min</div>
+                </FontStyled>
+              </div>
+
+              <div className="my-4 grid md:grid-cols-[1fr_2fr] gap-8 md:gap-25">
+                <div className="flex flex-col gap-4">
+                  <FontStyled variant="recipeTitle">INGREDIENTS</FontStyled>
+                  <ul className="list-disc pl-5 flex flex-col gap-4">
+                    {recipe.ingredients.map((ingredient, index) => (
+                      <li key={index}>{ingredient}</li>
+                    ))}
+                  </ul>
                 </div>
-              </FontStyled>
-            </div>
-
-            <div className="my-4 flex flex-row gap-8 md:gap-25">
-              <div className="flex flex-col gap-4">
-                <FontStyled variant="recipeTitle">INGREDIENTS</FontStyled>
-                <ul className="list-disc pl-5 flex flex-col gap-4">
-                  {recipe.ingredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient}</li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex flex-col gap-4">
-                <FontStyled variant="recipeTitle">INSTRUCTIONS</FontStyled>
-                <ul className="list-decimal pl-5 flex flex-col gap-4">
-                  {recipe.instructions.map((instruction, index) => (
-                    <li key={index}>{instruction}</li>
-                  ))}
-                </ul>
+                <div className="flex flex-col gap-4">
+                  <FontStyled variant="recipeTitle">INSTRUCTIONS</FontStyled>
+                  <ul className="list-decimal pl-5 flex flex-col gap-4">
+                    {recipe.instructions.map((instruction, index) => (
+                      <li key={index}>{instruction}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
+          ) : (
+            <div>Loading...</div>
+          )}
+          <div className="md:max-w-75 flex flex-wrap sm:flex-nowrap md:flex-col gap-2 box-border md:gap-8 justify-center md:justify-start items-center">
+            {recipes.slice(0, 3).map((recipe: Recipe, index: number) => (
+              <div
+                className="sm:max-w-[calc(1/2.5*100%)] md:max-w-full md:w-full"
+                key={index}
+              >
+                <RecipeCard
+                  isLoading={loading}
+                  recipe={{
+                    id: recipe.id,
+                    title: recipe.name,
+                    image: recipe.image,
+                    category: recipe.cuisine,
+                    cookTimeMinutes: recipe.cookTimeMinutes,
+                    rating: recipe.rating,
+                  }}
+                />
+              </div>
+            ))}
           </div>
-        ) : (
-          <div>Loading...</div>
-        )}
-
-        <div
-          className="grid md:max-w-75 gap-x-4 
-          grid-cols-1 justify-items-center
-       sm:grid-cols-2 md:grid-cols-1 gap-y-8 pt-16"
-        >
-          {recipes.slice(0, 3).map((recipe: Recipe, index: number) => (
-            <RecipeCard
-              isLoading={loading}
-              recipe={{
-                id: recipe.id,
-                title: recipe.name,
-                image: recipe.image,
-                category: recipe.cuisine,
-                cookTimeMinutes: recipe.cookTimeMinutes,
-                rating: recipe.rating,
-              }}
-            />
-          ))}
         </div>
       </div>
       <LineDivider />
