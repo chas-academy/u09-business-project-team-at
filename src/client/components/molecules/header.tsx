@@ -20,7 +20,7 @@ const renderVariantButton = (
 ) => {
   if (variant === "guest") {
     return (
-      <li className="mx-4 my-4 mr-0">
+      <li className="mx-4 my-0 mr-0">
         <Button variant="secondary" onClick={toggleMenu}>
           Sign in
         </Button>
@@ -107,13 +107,13 @@ export default class Test extends Component<HeaderProps, menuState> {
 
     return (
       <header className="bg-black h-24 z-[15]">
-        <nav className=" md:max-w-7xl mx-auto md:px-4 xl:px-0 py-5 text-base text-white bg-black shadow md:flex md:items-center md:justify-between">
+        <nav className="md:max-w-7xl mx-auto md:px-4 xl:px-0 py-5 text-base text-white bg-black shadow md:flex md:items-center md:justify-between">
           <div className="flex justify-between items-center">
             <Link to="/" className="text-[32px] cursor-pointer">
               Recifood
             </Link>
 
-            <span className="text-3xl cursor-pointer mx-2 md:hidden block">
+            <span className="text-3xl cursor-pointer mx-2 md:hidden flex items-center justify-center">
               <IonIcon icon={menu} onClick={this.toggleMenu}></IonIcon>
             </span>
           </div>
