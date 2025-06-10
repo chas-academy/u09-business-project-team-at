@@ -11,7 +11,7 @@ type ButtonProps = {
 };
 
 const baseClasses =
-  "px-6 py-2 font-bold rounded transition-colors duration-500 leading-[12.8px] text-[14px] border-2  cursor-pointer";
+  "px-6 py-2 font-bold rounded transition-colors duration-500 leading-[12.8px] text-[14px] border-2 cursor-pointer";
 
 const variantClasses = {
   primary:
