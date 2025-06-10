@@ -24,7 +24,7 @@ export const createList = async (req:Request, res:Response) => {
 
 export const viewList = async (req:Request, res:Response) => {
     try {
-        const list = await ListModel.findById(req.params.id).orFail(new HttpError(404, "not found"));
+        const list = await ListModel.findById(req.params.listId).orFail(new HttpError(404, "not found"));
         res.status(200).json(list).end();
     } catch (e) {
         handleHttpError(e, res);
@@ -46,7 +46,7 @@ export const listList = async (req:Request, res:Response) => {
 
 export const updateList = async (req:Request, res:Response) => {
     try {
-        const {name, desc, recipies} = req.body;
+        const {name, desc, recipes} = req.body;
         const user = await UserModel.findById(req.params.id).orFail(new HttpError(404, "user not found, somehow"));
         const list = await ListModel.findById(req.params.listId).orFail(new HttpError(404, "list not found"));
         if (user.lists.includes(list._id)) {
@@ -56,8 +56,8 @@ export const updateList = async (req:Request, res:Response) => {
             if (desc) {
                 list.description = desc;
             }
-            if (recipies) {
-                list.recipes = recipies;
+            if (recipes) {
+                list.recipes = recipes;
             }
             await list.save();
             res.status(200).json(list).end();
