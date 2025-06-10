@@ -1,20 +1,40 @@
-import { model, Schema, Types } from "mongoose";
+import { Types } from "mongoose";
+import { createHash, randomBytes } from "crypto";
+import { getModelForClass, prop, pre } from "@typegoose/typegoose";
+import type { Ref } from "@typegoose/typegoose";
+import { Base, TimeStamps } from "@typegoose/typegoose/lib/defaultClasses.js";
+import { List } from "./List.ts";
 
-export interface IUser {
-    name:string;
-    email:string;
-    password:string;
-    lists:Array<Types.ObjectId>;
+@pre<User>("save", function(next) { //password hashing
+    if (this.isModified("password") || this.isNew) {
+        const salt = randomBytes(128).toString("base64");
+        const hashedPassword = createHash("sha256")
+            .update(this.password + salt)
+            .digest("hex");
+        this.salt = salt;
+        this.password = hashedPassword;
+    }
+    next();
+})
+export class User extends TimeStamps implements Base {
+    public _id!: Types.ObjectId;
+    public id!: string;
+
+    @prop({ required: true })
+    public name!: string;
+
+    @prop({ required: true })
+    public email!: string;
+
+    @prop({ required: true })
+    public password!: string;
+
+    @prop()
+    public salt?: string;
+
+    @prop({ ref: () => List })
+    public lists: Ref<List>[] = [];
 }
 
-export const userSchema = new Schema<IUser>({
-    name: { type: String, required: true },
-    email: { type: String, required: true },
-    password: { type: String, required: true },
-    lists: [{type: Schema.Types.ObjectId, ref: "List"}]
-}, {
-    timestamps: true
-});
-
-export const User = model("User", userSchema);
+export const UserModel = getModelForClass(User);
 

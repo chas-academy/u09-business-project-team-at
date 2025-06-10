@@ -2,6 +2,7 @@ import express from "express";
 import ViteExpress from "vite-express";
 import mongoose from "mongoose";
 import { load } from "ts-dotenv";
+import { mainRouter } from "./routes/MainRouter.ts";
 
 const env = load({
   DB_USER: String,
@@ -10,9 +11,7 @@ const env = load({
 
 const app = express();
 
-app.get("/api/test", (_, res) => {
-  res.send("this is an api response!!!!");
-});
+app.use("/api", mainRouter);
 
 await mongoose.connect(
   `mongodb+srv://${env.DB_USER}:${env.DB_PASSWORD}@cluster0.jfdd8.mongodb.net/u09`

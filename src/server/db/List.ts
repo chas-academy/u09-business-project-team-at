@@ -1,17 +1,19 @@
-import { model, Schema } from "mongoose";
+import { Base, TimeStamps } from "@typegoose/typegoose/lib/defaultClasses.js";
+import { getModelForClass, prop } from "@typegoose/typegoose";
+import { Types } from "mongoose";
 
-export interface IList {
-    name:string;
-    desc:string;
-    recipies:Array<string>;
+export class List extends TimeStamps implements Base {
+    public _id!: Types.ObjectId;
+    public id!: string;
+
+    @prop({ required: true })
+    public name!: string;
+
+    @prop()
+    public description?: string;
+
+    @prop({ type: () => [String] })
+    public recipes: string[] = [];
 }
 
-export const listSchema = new Schema<IList>({
-    name: { type: String, required: true },
-    desc: { type: String, required: true },
-    recipies: { type: [String], required: true },
-}, {
-    timestamps: true
-});
-
-export const List = model("List", listSchema);
+export const ListModel = getModelForClass(List);
