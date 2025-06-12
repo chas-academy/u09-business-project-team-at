@@ -5,19 +5,22 @@ import Recipes from "./pages/recipes";
 import Header from "./components/molecules/header";
 import Profile from "./pages/profile";
 import Trending from "./pages/trending";
+import { ModalProvider } from "./context/ModalContext";
 
 function App() {
   return (
-    <Router>
-      <Header variants="guest" />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/recipes" element={<Recipes />} />
-        <Route path="/recipe/:id" element={<DetailRecipe />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/trending" element={<Trending />} />
-      </Routes>
-    </Router>
+    <ModalProvider>
+      <Router>
+        <Header variants="guest" />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/recipes" element={<Recipes />} />
+          <Route path="/recipe/:id" element={<DetailRecipe />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/trending" element={<Trending />} />
+        </Routes>
+      </Router>
+    </ModalProvider>
   );
 }
 

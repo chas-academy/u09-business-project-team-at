@@ -11,11 +11,13 @@ import Carusel from "../organisms/carusel";
 import LineDivider from "../atoms/line-divider";
 import Banner from "../molecules/banner";
 import Button from "../atoms/button";
+import { useModal } from "../../context/ModalContext";
 
 export default function DetailRecipeTemplate() {
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const { invokeAddToListModal } = useModal();
 
   useEffect(() => {
     if (id) {
@@ -87,7 +89,13 @@ export default function DetailRecipeTemplate() {
                       <div>{recipe.cookTimeMinutes} min</div>
                     </div>
                     <div>
-                      <Button children="ADD TO LIST"></Button>
+                      <Button
+                        onClick={() => {
+                          invokeAddToListModal(true);
+                        }}
+                      >
+                        ADD TO LIST
+                      </Button>
                     </div>
                   </div>
                 </FontStyled>
