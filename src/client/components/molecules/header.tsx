@@ -1,172 +1,146 @@
-import { Component } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { IonIcon } from "@ionic/react";
 import { menu } from "ionicons/icons";
 import { handleMenu } from "../../js/menu";
 import { Link } from "react-router-dom";
 import Button from "../atoms/button";
-import LoginModal from "./login-modal";
-import SignUpModal from "./signup-modal";
+import LoginModal from "../organisms/loginModal";
+import SignUpModal from "../organisms/signUpModal";
+import { useUser } from "../../context/UserContext";
+import User from "../../models/user.model";
 
 type HeaderProps = {
   variants?: "guest" | "user";
 };
 
-type menuState = {
-  menuState: "menu" | "close";
-  showMenu: boolean;
-  showModal: "none" | "login" | "signup";
-};
-
-const renderVariantButton = (
-  variant: "guest" | "user",
-  toggleMenu: () => void,
-  openModal: () => void
-) => {
-  if (variant === "guest") {
-    return (
-      <li className="mx-4 my-0 mr-0">
-        <Button variant="secondary" onClick={openModal}>
-          SIGN IN
-        </Button>
-      </li>
-    );
-  }
-  if (variant === "user") {
-    return (
-      <li className="mx-4 my-4 mr-0">
-        <Button
-          onClick={toggleMenu}
-          renderType="link"
-          to="/profile"
-          variant="secondary"
-        >
-          Profile
-        </Button>
-      </li>
-    );
-  }
-  return null;
-};
+type ShowModal = "none" | "login" | "signup";
 
 const navLinks = [
   { name: "HOME", to: "/" },
   { name: "RECIPES", to: "/recipes" },
   { name: "TRENDING", to: "/trending" },
 ];
-export default class Header extends Component<HeaderProps, menuState> {
-  mediaQuery: MediaQueryList;
 
-  constructor(props: HeaderProps) {
-    super(props);
-    this.toggleMenu = this.toggleMenu.bind(this);
-    this.setShowMenu = this.setShowMenu.bind(this);
-    this.handleMediaQueryChange = this.handleMediaQueryChange.bind(this);
-    this.mediaQuery = window.matchMedia("(max-width: 768px)");
-    this.state = {
-      menuState: "close",
-      showMenu: !this.mediaQuery.matches,
-      showModal: "none",
-    };
-  }
-  openLoginModal = () => {
-    this.setState({ showModal: "login" });
-  };
+const useMediaQuery = (query: string) => {
+  const [matches, setMatches] = useState(
+    () => window.matchMedia(query).matches
+  );
 
-  openSignUpModal = () => {
-    this.setState({ showModal: "signup" });
-  };
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(query);
+    const handleChange = () => setMatches(mediaQuery.matches);
 
-  closeModal = () => {
-    this.setState({ showModal: "none" });
-  };
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, [query]);
 
-  componentDidMount() {
-    this.mediaQuery.addEventListener("change", this.handleMediaQueryChange);
-  }
+  return matches;
+};
 
-  componentWillUnmount() {
-    this.mediaQuery.removeEventListener("change", this.handleMediaQueryChange);
-  }
-
-  handleMediaQueryChange = () => {
-    this.setState({
-      menuState: "close",
-      showMenu: !this.mediaQuery.matches,
-    });
-  };
-  setShowMenu = (menuState: "menu" | "close") => {
-    this.setState({
-      showMenu:
-        (this.mediaQuery.matches && menuState === "menu") ||
-        !this.mediaQuery.matches,
-    });
-  };
-
-  toggleMenu = () => {
-    const newState = this.state.menuState === "menu" ? "close" : "menu";
-    this.setState(
-      {
-        menuState: newState,
-        showMenu:
-          (this.mediaQuery.matches && newState === "menu") ||
-          !this.mediaQuery.matches,
-      },
-      () => {
-        handleMenu({ name: this.state.menuState });
-      }
-    );
-  };
-
-  render() {
-    const { variants = "guest" } = this.props;
-    const navLinksClasses = "text-base hover:text-[#6DBE45] duration-200";
-
+const UserButtons: React.FC<{
+  user: User | null;
+  onOpenModal: () => void;
+  onToggleMenu: () => void;
+}> = ({ user, onOpenModal, onToggleMenu }) => {
+  if (!user) {
     return (
-      <header className="bg-black h-24 z-[15]">
-        <nav className="md:max-w-7xl mx-auto md:px-4 xl:px-0 py-5 text-base text-white bg-black shadow md:flex md:items-center md:justify-between">
-          <div className="flex justify-between items-center">
-            <Link to="/" className="text-[32px] cursor-pointer">
-              Recifood
-            </Link>
-
-            <span className="text-3xl cursor-pointer mx-2 md:hidden flex items-center justify-center">
-              <IonIcon icon={menu} onClick={this.toggleMenu}></IonIcon>
-            </span>
-          </div>
-
-          {this.state.showMenu && (
-            <ul className="md:flex md:items-center z-[10] md:z-auto md:static absolute bg-black w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-4 md:opacity-100 opacity-0 top-[70px] transition-all ease-in duration-200">
-              {navLinks.map((link) => (
-                <li key={link.name} className="mx-4 my-6 md:my-0">
-                  <Link
-                    to={link.to}
-                    className={navLinksClasses}
-                    onClick={this.toggleMenu}
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-
-              {renderVariantButton(
-                variants,
-                this.toggleMenu,
-                this.openLoginModal
-              )}
-            </ul>
-          )}
-          <LoginModal
-            open={this.state.showModal === "login"}
-            onClose={this.closeModal}
-            onSwitchToSignUp={this.openSignUpModal}
-          />
-          <SignUpModal
-            open={this.state.showModal === "signup"}
-            onClose={this.closeModal}
-            onSwitchToSignIn={this.openLoginModal}
-          />
-        </nav>
-      </header>
+      <li className="mx-4 my-0 mr-0">
+        <Button variant="secondary" onClick={onOpenModal}>
+          SIGN IN
+        </Button>
+      </li>
     );
   }
+  console.log("User has the following data:", user);
+
+  return (
+    <li className="mx-4 my-4 mr-0">
+      <Button
+        onClick={onToggleMenu}
+        renderType="link"
+        to="/profile"
+        variant="secondary"
+      >
+        Profile
+      </Button>
+    </li>
+  );
+};
+
+export default function Header({ variants = "guest" }: HeaderProps) {
+  const [menuState, setMenuState] = useState<"menu" | "close">("close");
+  const [showModal, setShowModal] = useState<ShowModal>("none");
+  const { user } = useUser();
+
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const showMenu = isMobile ? menuState === "menu" : true;
+
+  const openLoginModal = useCallback(() => setShowModal("login"), []);
+  const openSignUpModal = useCallback(() => setShowModal("signup"), []);
+  const closeModal = useCallback(() => setShowModal("none"), []);
+
+  const toggleMenu = useCallback(() => {
+    const newState = menuState === "menu" ? "close" : "menu";
+    setMenuState(newState);
+    handleMenu({ name: newState });
+  }, [menuState]);
+
+  // Reset menu when screen size changes
+  useEffect(() => {
+    if (!isMobile && menuState === "menu") {
+      setMenuState("close");
+    }
+  }, [isMobile, menuState]);
+
+  const navLinksClasses = "text-base hover:text-[#6DBE45] duration-200";
+  console.log("Header rendered with variants:", variants);
+
+  return (
+    <header className="bg-black h-24 z-[15]">
+      <nav className="md:max-w-7xl mx-auto md:px-4 xl:px-0 py-5 text-base text-white bg-black shadow md:flex md:items-center md:justify-between">
+        <div className="flex justify-between items-center">
+          <Link to="/" className="text-[32px] cursor-pointer">
+            Recifood
+          </Link>
+
+          <span className="text-3xl cursor-pointer mx-2 md:hidden flex items-center justify-center">
+            <IonIcon icon={menu} onClick={toggleMenu} />
+          </span>
+        </div>
+
+        {showMenu && (
+          <ul className="md:flex md:items-center z-[10] md:z-auto md:static absolute bg-black w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-4 md:opacity-100 opacity-0 top-[70px] transition-all ease-in duration-200">
+            {navLinks.map((link) => (
+              <li key={link.name} className="mx-4 my-6 md:my-0">
+                <Link
+                  to={link.to}
+                  className={navLinksClasses}
+                  onClick={toggleMenu}
+                >
+                  {link.name}
+                </Link>
+              </li>
+            ))}
+
+            <UserButtons
+              user={user}
+              onOpenModal={openLoginModal}
+              onToggleMenu={toggleMenu}
+            />
+          </ul>
+        )}
+
+        <LoginModal
+          open={showModal === "login"}
+          onClose={closeModal}
+          onSwitchToSignUp={openSignUpModal}
+        />
+        <SignUpModal
+          open={showModal === "signup"}
+          onClose={closeModal}
+          onSwitchToSignIn={openLoginModal}
+        />
+      </nav>
+    </header>
+  );
 }
