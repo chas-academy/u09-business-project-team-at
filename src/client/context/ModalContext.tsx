@@ -5,7 +5,7 @@ import AddToListModal from "../components/organisms/addtoListModal";
 interface ModalContextType {
   invokeLoginModal: (value: boolean) => void;
   invokeSignUpModal: (value: boolean) => void;
-  invokeAddToListModal: (value: boolean) => void;
+  invokeAddToListModal: (value: boolean, recipeId?: string) => void;
 }
 interface ModalProviderProps {
   children: ReactNode;
@@ -16,11 +16,17 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [showedLoginModal, invokeLoginModal] = useState(false);
   const [showedSignupModal, invokeSignUpModal] = useState(false);
   const [showedAddToListModal, invokeAddToListModal] = useState(false);
+  const [addToListRecipeId, setAddToListRecipeId] = useState<string | null>(
+    null
+  );
 
   const sharingData = {
     invokeLoginModal,
     invokeSignUpModal,
-    invokeAddToListModal,
+    invokeAddToListModal: (value: boolean, recipeId?: string) => {
+      invokeAddToListModal(value);
+      setAddToListRecipeId(recipeId ?? null);
+    },
   };
 
   return (
@@ -40,6 +46,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
         <AddToListModal
           open={showedAddToListModal}
           onClose={() => invokeAddToListModal(false)}
+          recipeId={addToListRecipeId ?? ""}
         />
       )}
     </ModalContext.Provider>
