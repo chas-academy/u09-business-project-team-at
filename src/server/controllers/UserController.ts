@@ -11,14 +11,16 @@ const env = load({
 
 export const createUser = async (req:Request, res:Response) => {
     try {
-        const {name, email, password} = req.body;
+        const {username, email, password} = req.body;
         const newUser = new UserModel({
-            name: name,
+            username: username,
             email: email,
             password: password,
         });
         await newUser.save();
-        res.status(201).json(newUser).end();
+
+        const token = jwt.sign({ sub: newUser._id }, env.JWT_SECRET, { expiresIn: "8h" });
+        res.status(201).json({ token: token, user: newUser.toJSON() }).end();
     } catch(e) {
         handleHttpError(e, res);
     }
@@ -42,7 +44,7 @@ export const login = async (req:Request, res:Response) => {
 export const viewUserPublic = async (req:Request, res:Response) => {
     try {
         const user = await UserModel.findById(req.params.id).orFail(new HttpError(404, "User not found"));
-        res.status(200).json({ name: user.name, lists: user.lists }).end();
+        res.status(200).json({ username: user.username, lists: user.lists }).end();
     } catch(e) {
         handleHttpError(e, res);
     }
@@ -51,7 +53,7 @@ export const viewUserPublic = async (req:Request, res:Response) => {
 export const viewUserPrivate = async (req:Request, res:Response) => {
     try {
         const user = await UserModel.findById(req.params.id).orFail(new HttpError(404, "User not found"));
-        res.status(200).json({ name: user.name, email: user.email, lists: user.lists }).end();
+        res.status(200).json({ username: user.username, email: user.email, lists: user.lists }).end();
     } catch(e) {
         handleHttpError(e, res);
     }
@@ -59,10 +61,10 @@ export const viewUserPrivate = async (req:Request, res:Response) => {
 
 export const editUser = async (req:Request, res:Response) => {
     try {
-        const {name, email, password} = req.body;
+        const {username, email, password} = req.body;
         const user = await UserModel.findById(req.params.id).orFail(new HttpError(404, "User not found"));
-        if (name) {
-            user.name = name;
+        if (username) {
+            user.username = username;
         }
         if (email) {
             user.email = email;
