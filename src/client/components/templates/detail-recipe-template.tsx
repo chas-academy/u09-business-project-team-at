@@ -10,6 +10,7 @@ import RecipeCard from "../molecules/recipe-card";
 import Carusel from "../organisms/carusel";
 import LineDivider from "../atoms/line-divider";
 import Banner from "../molecules/banner";
+import Button from "../atoms/button";
 
 export default function DetailRecipeTemplate() {
   const { id } = useParams<{ id: string }>();
@@ -18,13 +19,18 @@ export default function DetailRecipeTemplate() {
 
   useEffect(() => {
     if (id) {
-      RecipeService.getRecipeById(id)
-        .then((response: Recipe) => {
-          setRecipe(response);
-        })
-        .catch((error) => {
-          console.error("Error fetching recipe:", error);
-        });
+      const numericId = Number(id);
+      if (!isNaN(numericId)) {
+        RecipeService.getRecipeById(numericId)
+          .then((response: Recipe) => {
+            setRecipe(response);
+          })
+          .catch((error) => {
+            console.error("Error fetching recipe:", error);
+          });
+      } else {
+        console.error("Invalid recipe id:", id);
+      }
     }
   }, [id]);
 
@@ -62,22 +68,27 @@ export default function DetailRecipeTemplate() {
               <RecipeImage imageUrl={recipe.image} altText={recipe.name} />
               <div>
                 <FontStyled variant="recipeInfo">
-                  <div className="flex gap-4 items-center">
-                    <div>{recipe.cuisine}</div>{" "}
-                    <div className="w-0.5 h-4 bg-black"></div>
-                    <div className="flex items-center">
-                      <ThemeProvider theme={theme}>
-                        <Rating
-                          defaultValue={recipe.rating}
-                          precision={0.5}
-                          size="small"
-                          readOnly
-                          className="flex items-center"
-                        />
-                      </ThemeProvider>
+                  <div className="flex flex-col gap-4 sm:gap-0 sm:flex-row sm:justify-between sm:items-center">
+                    <div className="flex gap-4 items-center">
+                      <div>{recipe.cuisine}</div>{" "}
+                      <div className="w-0.5 h-4 bg-black"></div>
+                      <div className="flex items-center">
+                        <ThemeProvider theme={theme}>
+                          <Rating
+                            defaultValue={recipe.rating}
+                            precision={0.5}
+                            size="small"
+                            readOnly
+                            className="flex items-center"
+                          />
+                        </ThemeProvider>
+                      </div>
+                      <div className="w-0.5 h-4 bg-black"></div>
+                      <div>{recipe.cookTimeMinutes} min</div>
                     </div>
-                    <div className="w-0.5 h-4 bg-black"></div>
-                    <div>{recipe.cookTimeMinutes} min</div>
+                    <div>
+                      <Button children="ADD TO LIST"></Button>
+                    </div>
                   </div>
                 </FontStyled>
               </div>
