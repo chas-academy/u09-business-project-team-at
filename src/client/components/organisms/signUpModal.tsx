@@ -1,32 +1,33 @@
 import React, { useState } from "react";
-import BaseModal from "../organisms/base-modal";
+import BaseModal from "../atoms/base-modal";
 import Button from "../atoms/button";
 
-interface LoginModalProps {
+interface SignUpModalProps {
   open: boolean;
   onClose: () => void;
-  onSwitchToSignUp: () => void;
+  onSwitchToSignIn?: () => void;
 }
 
-export default function LoginModal({
+export default function SignUpModal({
   open,
   onClose,
-  onSwitchToSignUp,
-}: LoginModalProps) {
+  onSwitchToSignIn,
+}: SignUpModalProps) {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic
+    // Handle sign up logic
     onClose();
   };
 
   return (
-    <BaseModal open={open} onClose={onClose} title="Sign In">
+    <BaseModal open={open} onClose={onClose} title="Sign Up">
       <form
-        className="flex flex-col w-full max-w-80 mx-auto
-          text-start gap-8 text-base font-normal"
+        className="flex flex-col w-full max-w-80 mx-auto 
+        text-start gap-8 text-base font-normal"
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col gap-4">
@@ -36,7 +37,17 @@ export default function LoginModal({
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="rounded px-3 py-2 bg-white/10  text-white font-normal"
+              className="rounded px-3 py-2 bg-white/10 text-white font-normal"
+              required
+            />
+          </label>
+          <label className="flex flex-col gap-1 text-white text-base font-bold">
+            Email
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="rounded px-3 py-2 bg-white/10 text-white font-normal"
               required
             />
           </label>
@@ -46,32 +57,28 @@ export default function LoginModal({
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="rounded px-3 bg-white/10 py-2 text-white font-normal"
+              className="rounded px-3 py-2 bg-white/10 text-white font-normal"
               required
             />
           </label>
         </div>
         <div className="flex flex-col gap-4">
           <Button type="submit" variant="secondary" className="mt-2">
-            Sign In
+            Sign Up
           </Button>
-          {/* <Button onClick={onClose} variant="danger">
-              Close
-            </Button> */}
         </div>
         <div className="flex items-center gap-2">
           <div className="h-px flex-1 bg-white"></div>
           <span className="text-xs font-bold">or</span>
           <div className="h-px flex-1 bg-white"></div>
         </div>
-
         <div className="flex flex-col items-center font-bold">
-          <span>Don't have an account yet?</span>
+          <span>Already have an account?</span>
           <a
             className="flex cursor-pointer items-center gap-1 text-[#EB634B] transition hover:text-[#6DBE45]"
-            onClick={onSwitchToSignUp}
+            onClick={onSwitchToSignIn}
           >
-            Sign up
+            Sign in
           </a>
         </div>
       </form>
