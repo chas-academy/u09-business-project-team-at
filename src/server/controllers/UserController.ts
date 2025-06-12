@@ -4,6 +4,7 @@ import { HttpError, handleHttpError } from "../HttpError.js";
 import { createHash } from "crypto";
 import jwt from "jsonwebtoken";
 import { load } from "ts-dotenv";
+import { ListModel } from "../db/List.ts";
 
 const env = load({
     JWT_SECRET:String
@@ -81,7 +82,11 @@ export const editUser = async (req:Request, res:Response) => {
 
 export const deleteUser = async (req:Request, res:Response) => {
     try {
-        await UserModel.findById(req.params.id).deleteOne().orFail(new HttpError(404, "User not found"));
+        const user = await UserModel.findById(req.params.id).orFail(new HttpError(404, "User not found"));
+        user.lists.forEach(async (list) => {
+            await ListModel.findById(list).deleteOne();
+        });
+        await user.deleteOne();
         res.status(200).json({ message: "User successfully deleted" }).end();
     } catch (e) {
         handleHttpError(e, res);

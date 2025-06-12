@@ -1,7 +1,14 @@
 import { Base, TimeStamps } from "@typegoose/typegoose/lib/defaultClasses.js";
-import { getModelForClass, prop } from "@typegoose/typegoose";
+import { getModelForClass, prop, pre } from "@typegoose/typegoose";
 import { Types } from "mongoose";
 
+@pre<List>("save", function (next) {
+  if (this.isModified("recipes")) {
+    this.recipes = [...new Set(this.recipes)];
+    this.recipes = this.recipes.filter((i) => i.length > 0);
+  }
+  next();
+})
 export class List extends TimeStamps implements Base {
   public _id!: Types.ObjectId;
   public id!: string;
