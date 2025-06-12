@@ -91,7 +91,7 @@ export default function DetailRecipeTemplate() {
                     <div>
                       <Button
                         onClick={() => {
-                          invokeAddToListModal(true);
+                          invokeAddToListModal(true, id);
                         }}
                       >
                         ADD TO LIST
