@@ -6,7 +6,7 @@ import Header from "./components/molecules/header";
 import Profile from "./pages/profile";
 import Trending from "./pages/trending";
 import { ModalProvider } from "./context/ModalContext";
-import { UserProvider } from "./contexts/UserContext";
+import { UserProvider } from "./context/UserContext";
 
 function App() {
   return (

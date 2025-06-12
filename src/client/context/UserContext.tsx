@@ -5,8 +5,8 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { UserService } from "../services/user.service";
-import User from "../models/user.model";
+import { UserService } from "../services/user.service.ts";
+import User from "../models/user.model.ts";
 
 interface UserContextType {
   user: User | null;
