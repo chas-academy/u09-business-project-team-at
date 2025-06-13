@@ -33,7 +33,7 @@ export const login = async (req:Request, res:Response) => {
         const user = await UserModel.findOne({ "email": email }).orFail(new HttpError(400, "Incorrect credentials"));
         if (user.password == createHash("sha256").update(password + user.salt).digest("hex")) {
             const token = jwt.sign({ sub: user._id }, env.JWT_SECRET, { expiresIn: "8h" });
-            res.status(200).json({ token: token }).end();
+            res.status(200).json({ token: token, user: user.toJSON() }).end();
         } else {
             throw new HttpError(400, "Incorrect credentials");
         }

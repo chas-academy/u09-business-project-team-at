@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import BaseModal from "../atoms/base-modal";
 import Button from "../atoms/button";
+import { LoginDto, LoginResponse } from "../../models/signupdto.model";
+import { UserService } from "../../services/user.service";
+import { useUser } from "../../context/UserContext";
 
 interface LoginModalProps {
   open: boolean;
@@ -13,13 +16,40 @@ export default function LoginModal({
   onClose,
   onSwitchToSignUp,
 }: LoginModalProps) {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { login } = useUser();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic
-    onClose();
+    setError(null);
+
+    const loginData: LoginDto = {
+      email,
+      password,
+    }
+
+    try {
+      const result: LoginResponse = await UserService.login(loginData);
+
+      login(result.user, result.token);
+
+      console.log("Sign in successful:", result);
+
+      setEmail("");
+      setPassword("");
+
+      onClose();
+    } catch (error) {
+      console.error("Login failed:", error);
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Login failed. Please try again."
+      );
+    }
   };
 
   return (
@@ -31,11 +61,11 @@ export default function LoginModal({
       >
         <div className="flex flex-col gap-4">
           <label className="flex flex-col gap-1 text-white text-base font-bold">
-            Username
+            Email
             <input
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="rounded px-3 py-2 bg-white/10  text-white font-normal"
               required
             />
@@ -51,6 +81,9 @@ export default function LoginModal({
             />
           </label>
         </div>
+        {error && (
+          <div className="text-red-400 text-sm text-center">{error}</div>
+        )}
         <div className="flex flex-col gap-4">
           <Button type="submit" variant="secondary" className="mt-2">
             Sign In
