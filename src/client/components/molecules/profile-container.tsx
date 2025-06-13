@@ -4,7 +4,7 @@ import Button from "../atoms/button";
 import { useUser } from "../../context/UserContext";
 
 export default function ProfileContainer() {
-  const { user, token } = useUser();
+  const { user, token, logout } = useUser();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -71,7 +71,7 @@ export default function ProfileContainer() {
           <Button variant="transparent">Edit name</Button>
           <Button variant="transparent">Edit password</Button>
           <Button variant="transparent">Delete account</Button>
-          <Button variant="danger">Logout</Button>
+          <Button variant="danger" onClick={logout}>Logout</Button>
         </div>
       </div>
     </>

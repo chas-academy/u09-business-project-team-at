@@ -45,6 +45,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
   const logout = () => {
     UserService.logout();
     setUser(null);
+    setToken(null);
   };
 
   const contextValue: UserContextType = {
