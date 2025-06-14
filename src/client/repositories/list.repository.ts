@@ -51,5 +51,17 @@ export const ListRepository = {
       throw new Error("Failed to create list");
     }
     return response.json();
-  }
+  },
+
+  async getListById(token: string, listId: string): Promise<List> {
+    const response = await fetch(API_DOMAIN + `/api/list/list/${listId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch list by ID");
+    }
+    return response.json();
+  },
 };

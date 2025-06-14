@@ -16,7 +16,7 @@ listRouter.post("/:id", bodyParser.json(), authorize, createList); //name
 
 listRouter.get("/:id", listList);
 
-listRouter.get("/:listId", viewList);
+listRouter.get("/list/:listId", viewList);
 
 listRouter.patch("/:id/:listId", bodyParser.json(), authorize, updateList); //name?, desc?, recipes?
 
