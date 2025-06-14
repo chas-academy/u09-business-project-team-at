@@ -109,7 +109,7 @@ export default function Header({ variants = "guest" }: HeaderProps) {
         </div>
 
         {showMenu && (
-          <ul className="md:flex md:items-center z-[10] md:z-auto md:static absolute bg-black w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-4 md:opacity-100 opacity-0 top-[70px] transition-all ease-in duration-200">
+          <ul className="md:flex md:items-center z-[10] md:z-auto md:static absolute bg-black w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-4 top-[70px] transition-all ease-in duration-200">
             {navLinks.map((link) => (
               <li key={link.name} className="mx-4 my-6 md:my-0">
                 <Link
