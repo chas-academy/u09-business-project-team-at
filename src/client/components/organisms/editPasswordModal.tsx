@@ -63,7 +63,7 @@ export default function EditPasswordModal({
           <label className="flex flex-col gap-1 text-white text-base font-bold">
             New password
             <input
-              type="text"
+              type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="rounded px-3 py-2 bg-white/10 text-white font-normal"
