@@ -5,16 +5,11 @@ import { List, ListModel } from "../db/List.ts";
 
 export const createList = async (req: Request, res: Response) => {
   try {
-    const { name, desc } = req.body;
+    const { name } = req.body;
     const user = await UserModel.findById(req.params.id).orFail(
       new HttpError(404, "user not found, somehow")
     );
-    const newList = new ListModel({
-      name: name,
-    });
-    if (desc) {
-      newList.description = desc;
-    }
+    const newList = new ListModel({ name });
     await newList.save();
     user.lists.push(newList._id);
     await user.save();
@@ -56,7 +51,7 @@ export const listList = async (req: Request, res: Response) => {
 
 export const updateList = async (req: Request, res: Response) => {
   try {
-    const { name, desc, recipes } = req.body;
+    const { name, recipes } = req.body;
     const user = await UserModel.findById(req.params.id).orFail(
       new HttpError(404, "user not found, somehow")
     );
@@ -66,9 +61,6 @@ export const updateList = async (req: Request, res: Response) => {
     if (user.lists.includes(list._id)) {
       if (name) {
         list.name = name;
-      }
-      if (desc) {
-        list.description = desc;
       }
       if (recipes) {
         list.recipes = recipes;

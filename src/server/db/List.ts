@@ -16,9 +16,6 @@ export class List extends TimeStamps implements Base {
   @prop({ required: true, type: String })
   public name!: string;
 
-  @prop({ type: String })
-  public description?: string;
-
   @prop({ type: () => [String] })
   public recipes: string[] = [];
 }
