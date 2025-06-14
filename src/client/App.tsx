@@ -5,22 +5,29 @@ import Recipes from "./pages/recipes";
 import Header from "./components/molecules/header";
 import Profile from "./pages/profile";
 import Trending from "./pages/trending";
+import Lists from "./pages/lists";
 import { ModalProvider } from "./context/ModalContext";
 import { UserProvider } from "./context/UserContext";
+import Wrapper from "./components/templates/wrapper";
 
 function App() {
   return (
     <UserProvider>
       <ModalProvider>
         <Router>
-          <Header variants="guest" />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/recipes" element={<Recipes />} />
-            <Route path="/recipe/:id" element={<DetailRecipe />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/trending" element={<Trending />} />
-          </Routes>
+          <Wrapper>
+            <Header variants="guest" />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/recipes" element={<Recipes />} />
+              <Route path="/recipe/:id" element={<DetailRecipe />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/trending" element={<Trending />} />
+              <Route path="/list/:id" element={<Lists />} />
+              {/* Redirect all other paths to Home page */}
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </Wrapper>
         </Router>
       </ModalProvider>
     </UserProvider>

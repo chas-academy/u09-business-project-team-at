@@ -47,6 +47,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     UserService.logout();
     setUser(null);
     setToken(null);
+    window.location.replace("/");
   };
 
   const contextValue: UserContextType = {
