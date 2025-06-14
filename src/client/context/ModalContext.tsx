@@ -2,6 +2,7 @@ import { createContext, useContext, useState, ReactNode } from "react";
 import LoginModal from "../components/organisms/loginModal";
 import AddToListModal from "../components/organisms/addtoListModal";
 import CreateAListModal from "../components/organisms/CreateAListModal";
+import SignUpModal from "../components/organisms/signUpModal";
 
 interface ModalContextType {
   invokeLoginModal: (value: boolean) => void;
@@ -47,10 +48,10 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
         />
       )}
       {showedSignupModal && (
-        <LoginModal
+        <SignUpModal
           open={showedSignupModal}
           onClose={() => invokeSignUpModal(false)}
-          onSwitchToSignUp={() => {
+          onSwitchToSignIn={() => {
             invokeSignUpModal(false);
             invokeLoginModal(true);
           }}
@@ -63,11 +64,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
           recipeId={addToListRecipeId ?? ""}
         />
       )}
-      {
-        showedCreateAListModal && (
-          <CreateAListModal/>
-        )
-      }
+      {showedCreateAListModal && <CreateAListModal />}
     </ModalContext.Provider>
   );
 };
