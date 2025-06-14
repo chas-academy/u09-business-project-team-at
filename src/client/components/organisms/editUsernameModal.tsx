@@ -37,7 +37,7 @@ export default function EditUsernameModal({
 
 			login(result, localStorage.token);
 
-			console.log("Username updated succesfully", result);
+			// console.log("Username updated succesfully", result);
 
 			setUsername("");
 
