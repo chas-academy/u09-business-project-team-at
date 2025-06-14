@@ -37,7 +37,7 @@ export default function EditPasswordModal({
 
       login(result, localStorage.token);
 
-      console.log("Password updated succesfully", result);
+      // console.log("Password updated succesfully", result);
 
       setPassword("");
 
