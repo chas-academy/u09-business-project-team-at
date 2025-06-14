@@ -1,39 +1,44 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import FontStyled from "../atoms/font-styling";
 import Button from "../atoms/button";
 import { useUser } from "../../context/UserContext";
 import { ListService } from "../../services/list.service";
 import { List } from "../../models/list.model";
 import { Link } from "react-router-dom";
+import { useModal } from "../../context/ModalContext";
 
 export default function ListContainer() {
   const { token, user } = useUser();
+  const { invokeCreateAListModal } = useModal();
   const [lists, setLists] = useState<List[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const fetchLists = useCallback(async () => {
+    if (!token || !user?.id) {
+      setError("Please log in to view your lists");
+      setLoading(false);
+      return;
+    }
+    try {
+      setLoading(true);
+      const data = await ListService.getAllLists(token, user.id);
+      console.log("Fetched lists:", data);
+      setLists(data);
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching lists:", err);
+      setError("Failed to load your lists");
+    } finally {
+      setLoading(false);
+    }
+  }, [token, user?.id]);
+
   useEffect(() => {
-    const fetchLists = async () => {
-      if (!token || !user?.id) {
-        setError("Please log in to view your lists");
-        setLoading(false);
-        return;
-      }
+    fetchLists();
+  }, [fetchLists]);
 
-      try {
-        setLoading(true);
-        const data = await ListService.getAllLists(token, user.id);
-        console.log("Fetched lists:", data);
-        setLists(data);
-        setError(null);
-      } catch (err) {
-        console.error("Error fetching lists:", err);
-        setError("Failed to load your lists");
-      } finally {
-        setLoading(false);
-      }
-    };
-
+  useEffect(() => {
     fetchLists();
   }, [token, user?.id]);
 
@@ -90,7 +95,7 @@ export default function ListContainer() {
                 </Link>
               ))
             )}
-            <Button className=" w-full ">Create New List</Button>
+            <Button className=" w-full " onClick={() => invokeCreateAListModal(true)}>Create New List</Button>
           </div>
         </div>
       </div>

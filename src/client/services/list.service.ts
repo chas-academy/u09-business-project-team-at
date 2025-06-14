@@ -13,4 +13,7 @@ export const ListService = {
   ): Promise<List> {
     return await ListRepository.updateList(token, id, listId, recipeId, list);
   },
+  async createList(token: string, id: string, name: string): Promise<List> {
+    return await ListRepository.createList(token, id, name);
+  },
 };
