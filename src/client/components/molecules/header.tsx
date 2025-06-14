@@ -8,12 +8,11 @@ import LoginModal from "../organisms/loginModal";
 import SignUpModal from "../organisms/signUpModal";
 import { useUser } from "../../context/UserContext";
 import User from "../../models/user.model";
+import { useModal } from "../../context/ModalContext";
 
 type HeaderProps = {
   variants?: "guest" | "user";
 };
-
-type ShowModal = "none" | "login" | "signup";
 
 const navLinks = [
   { name: "HOME", to: "/" },
@@ -39,13 +38,13 @@ const useMediaQuery = (query: string) => {
 
 const UserButtons: React.FC<{
   user: User | null;
-  onOpenModal: () => void;
   onToggleMenu: () => void;
-}> = ({ user, onOpenModal, onToggleMenu }) => {
+}> = ({ user, onToggleMenu }) => {
+  const { invokeLoginModal } = useModal();
   if (!user) {
     return (
       <li className="mx-4 my-0 mr-0">
-        <Button variant="secondary" onClick={onOpenModal}>
+        <Button variant="secondary" onClick={() => invokeLoginModal(true)}>
           SIGN IN
         </Button>
       </li>
@@ -69,15 +68,10 @@ const UserButtons: React.FC<{
 
 export default function Header({ variants = "guest" }: HeaderProps) {
   const [menuState, setMenuState] = useState<"menu" | "close">("close");
-  const [showModal, setShowModal] = useState<ShowModal>("none");
   const { user } = useUser();
 
   const isMobile = useMediaQuery("(max-width: 768px)");
   const showMenu = isMobile ? menuState === "menu" : true;
-
-  const openLoginModal = useCallback(() => setShowModal("login"), []);
-  const openSignUpModal = useCallback(() => setShowModal("signup"), []);
-  const closeModal = useCallback(() => setShowModal("none"), []);
 
   const toggleMenu = useCallback(() => {
     const newState = menuState === "menu" ? "close" : "menu";
@@ -85,7 +79,6 @@ export default function Header({ variants = "guest" }: HeaderProps) {
     handleMenu({ name: newState });
   }, [menuState]);
 
-  // Reset menu when screen size changes
   useEffect(() => {
     if (!isMobile && menuState === "menu") {
       setMenuState("close");
@@ -122,24 +115,9 @@ export default function Header({ variants = "guest" }: HeaderProps) {
               </li>
             ))}
 
-            <UserButtons
-              user={user}
-              onOpenModal={openLoginModal}
-              onToggleMenu={toggleMenu}
-            />
+            <UserButtons user={user} onToggleMenu={toggleMenu} />
           </ul>
         )}
-
-        <LoginModal
-          open={showModal === "login"}
-          onClose={closeModal}
-          onSwitchToSignUp={openSignUpModal}
-        />
-        <SignUpModal
-          open={showModal === "signup"}
-          onClose={closeModal}
-          onSwitchToSignIn={openLoginModal}
-        />
       </nav>
     </header>
   );
