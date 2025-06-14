@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import FontStyled from "../atoms/font-styling";
 import Button from "../atoms/button";
 import { useUser } from "../../context/UserContext";
+import { useModal } from "../../context/ModalContext";
 
 export default function ProfileContainer() {
   const { user, token, logout } = useUser();
+  const { invokeEditUsernameModal, invokeEditPasswordModal } = useModal();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -42,10 +44,10 @@ export default function ProfileContainer() {
           Profile: {user.username}
         </FontStyled>
         <div className="rounded-lg gap-4 p-4 flex flex-col border border-[#D9D9D9]">
-          <Button className="py-4" variant="transparent">
+          <Button className="py-4" variant="transparent" onClick={() => invokeEditUsernameModal(true)}>
             Edit name
           </Button>
-          <Button className="py-4" variant="transparent">
+          <Button className="py-4" variant="transparent" onClick={() => invokeEditPasswordModal(true)}>
             Edit password
           </Button>
           <Button className="py-4" variant="transparent">

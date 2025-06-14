@@ -23,8 +23,8 @@ export default function AddToListModal({
 
   useEffect(() => {
     const fetchLists = async () => {
-      console.log("Current user:", user);
-      console.log("Token:", token);
+      // console.log("Current user:", user);
+      // console.log("Token:", token);
 
       if (!token || !user?.id) {
         console.log("No token or user ID found");
@@ -35,9 +35,9 @@ export default function AddToListModal({
 
       try {
         setLoading(true);
-        console.log("Fetching lists for user ID:", user.id);
+        // console.log("Fetching lists for user ID:", user.id);
         const data = await ListService.getAllLists(token, user.id);
-        console.log("Fetched lists:", data);
+        // console.log("Fetched lists:", data);
         setLists(data);
         setError(null);
       } catch (err) {

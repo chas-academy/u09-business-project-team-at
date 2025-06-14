@@ -29,14 +29,14 @@ export default function LoginModal({
     const loginData: LoginDto = {
       username: username,
       password,
-    }
+    };
 
     try {
       const result: LoginResponse = await UserService.login(loginData);
 
       login(result.user, result.token);
 
-      console.log("Sign in successful:", result);
+      // console.log("Sign in successful:", result);
 
       setUsername("");
       setPassword("");
@@ -61,7 +61,7 @@ export default function LoginModal({
       >
         <div className="flex flex-col gap-4">
           <label className="flex flex-col gap-1 text-white text-base font-bold">
-            Email
+            Username
             <input
               type="text"
               value={username}
