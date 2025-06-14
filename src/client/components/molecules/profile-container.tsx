@@ -42,10 +42,18 @@ export default function ProfileContainer() {
           Profile: {user.username}
         </FontStyled>
         <div className="rounded-lg gap-4 p-4 flex flex-col border border-[#D9D9D9]">
-          <Button variant="transparent">Edit name</Button>
-          <Button variant="transparent">Edit password</Button>
-          <Button variant="transparent">Delete account</Button>
-          <Button variant="danger" onClick={logout}>Logout</Button>
+          <Button className="py-4" variant="transparent">
+            Edit name
+          </Button>
+          <Button className="py-4" variant="transparent">
+            Edit password
+          </Button>
+          <Button className="py-4" variant="transparent">
+            Delete account
+          </Button>
+          <Button className="py-4" variant="danger" onClick={logout}>
+            Logout
+          </Button>
         </div>
       </div>
     </>
