@@ -40,6 +40,7 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     localStorage.setItem("token", token);
     localStorage.setItem("user", JSON.stringify(userData));
     setUser(userData);
+    setToken(token);
   };
 
   const logout = () => {

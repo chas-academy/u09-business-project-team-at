@@ -16,7 +16,7 @@ export default function LoginModal({
   onClose,
   onSwitchToSignUp,
 }: LoginModalProps) {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
@@ -27,7 +27,7 @@ export default function LoginModal({
     setError(null);
 
     const loginData: LoginDto = {
-      email,
+      username: username,
       password,
     }
 
@@ -38,7 +38,7 @@ export default function LoginModal({
 
       console.log("Sign in successful:", result);
 
-      setEmail("");
+      setUsername("");
       setPassword("");
 
       onClose();
@@ -64,8 +64,8 @@ export default function LoginModal({
             Email
             <input
               type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="rounded px-3 py-2 bg-white/10  text-white font-normal"
               required
             />
