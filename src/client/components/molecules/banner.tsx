@@ -7,8 +7,6 @@ type BannerProps = {
   description: string;
   subtitle?: string;
   image?: string;
-  buttonText?: string;
-  to?: string;
   alt?: string;
 };
 
@@ -17,8 +15,7 @@ const baseClasses =
 
 export default class Banner extends Component<BannerProps> {
   render() {
-    const { title, description, alt, subtitle, buttonText, image, to } =
-      this.props;
+    const { title, description, alt, subtitle, image } = this.props;
     return (
       <div className={baseClasses}>
         {image && (
@@ -41,11 +38,6 @@ export default class Banner extends Component<BannerProps> {
             )}
           </div>
           <FontStyled variant="bannerDesc">{description}</FontStyled>
-          {buttonText && to && (
-            <Button renderType="link" to={to} variant="secondary">
-              {buttonText}
-            </Button>
-          )}
         </div>
       </div>
     );
