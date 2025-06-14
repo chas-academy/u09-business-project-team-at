@@ -16,7 +16,7 @@ const baseClasses =
 
 const variantClasses = {
   primary:
-    "bg-black border-black hover:border-white border-solid text-white hover:bg-white hover:text-black",
+    "bg-black border-black hover:border-black hover:border-solid text-white hover:bg-white hover:text-black",
   secondary:
     "bg-white text-black hover:bg-transparent hover:border-white hover:text-white",
   transparent:

@@ -22,19 +22,28 @@ export class User extends TimeStamps implements Base {
   public id!: string;
 
   @prop({ required: true, type: String })
-  public name!: string;
+  public username!: string;
 
   @prop({ required: true, type: String })
   public email!: string;
 
   @prop({ required: true, type: String })
-  public password!: string;
+  public password?: string;
 
   @prop({ type: String })
   public salt?: string;
 
   @prop({ ref: () => List, type: () => [List] })
   public lists: Ref<List>[] = [];
+
+  public toJSON() {
+    return {
+      id: this.id,
+      username: this.username,
+      email: this.email,
+      lists: this.lists,
+    };
+  }
 }
 
 export const UserModel = getModelForClass(User);

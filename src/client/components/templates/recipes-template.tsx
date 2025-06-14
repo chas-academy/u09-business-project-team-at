@@ -13,12 +13,10 @@ export default function RecipesTemplate() {
       <FontStyled variant="sectionTitle">New Feature</FontStyled>
       <Banner
         title="What's in Your Kitchen?"
-        subtitle="New Feature"
+        subtitle="New Feature Coming Soon!"
         description="Enter the ingredients you have, and we’ll match you with delicious recipes you can make right now — no extra shopping needed."
-        buttonText="LEARN MORE"
         image="https://i.gyazo.com/13e9d337fb6332689c870d65959a2882.png"
         alt="Fridge"
-        to="/recommendation"
       />
       <LineDivider />
       <FontStyled variant="sectionTitle">Trending Recipes</FontStyled>

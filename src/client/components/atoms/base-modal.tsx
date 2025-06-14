@@ -26,7 +26,15 @@ export default function BaseModal({
       flex-col gap-4"
         style={{ minHeight: "400px" }}
       >
-        <DialogTitle>{title}</DialogTitle>
+        <DialogTitle
+          sx={{
+            fontWeight: "bold",
+            fontSize: "2rem",
+          }}
+          className="text-4xl font-bold"
+        >
+          {title}
+        </DialogTitle>
         {children}
       </div>
     </Dialog>

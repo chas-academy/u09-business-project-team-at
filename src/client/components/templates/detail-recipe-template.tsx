@@ -10,21 +10,29 @@ import RecipeCard from "../molecules/recipe-card";
 import Carusel from "../organisms/carusel";
 import LineDivider from "../atoms/line-divider";
 import Banner from "../molecules/banner";
+import Button from "../atoms/button";
+import { useModal } from "../../context/ModalContext";
 
 export default function DetailRecipeTemplate() {
   const { id } = useParams<{ id: string }>();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const { invokeAddToListModal } = useModal();
 
   useEffect(() => {
     if (id) {
-      RecipeService.getRecipeById(id)
-        .then((response: Recipe) => {
-          setRecipe(response);
-        })
-        .catch((error) => {
-          console.error("Error fetching recipe:", error);
-        });
+      const numericId = Number(id);
+      if (!isNaN(numericId)) {
+        RecipeService.getRecipeById(numericId)
+          .then((response: Recipe) => {
+            setRecipe(response);
+          })
+          .catch((error) => {
+            console.error("Error fetching recipe:", error);
+          });
+      } else {
+        console.error("Invalid recipe id:", id);
+      }
     }
   }, [id]);
 
@@ -62,22 +70,33 @@ export default function DetailRecipeTemplate() {
               <RecipeImage imageUrl={recipe.image} altText={recipe.name} />
               <div>
                 <FontStyled variant="recipeInfo">
-                  <div className="flex gap-4 items-center">
-                    <div>{recipe.cuisine}</div>{" "}
-                    <div className="w-0.5 h-4 bg-black"></div>
-                    <div className="flex items-center">
-                      <ThemeProvider theme={theme}>
-                        <Rating
-                          defaultValue={recipe.rating}
-                          precision={0.5}
-                          size="small"
-                          readOnly
-                          className="flex items-center"
-                        />
-                      </ThemeProvider>
+                  <div className="flex flex-col gap-4 sm:gap-0 sm:flex-row sm:justify-between sm:items-center">
+                    <div className="flex gap-4 items-center">
+                      <div>{recipe.cuisine}</div>{" "}
+                      <div className="w-0.5 h-4 bg-black"></div>
+                      <div className="flex items-center">
+                        <ThemeProvider theme={theme}>
+                          <Rating
+                            defaultValue={recipe.rating}
+                            precision={0.5}
+                            size="small"
+                            readOnly
+                            className="flex items-center"
+                          />
+                        </ThemeProvider>
+                      </div>
+                      <div className="w-0.5 h-4 bg-black"></div>
+                      <div>{recipe.cookTimeMinutes} min</div>
                     </div>
-                    <div className="w-0.5 h-4 bg-black"></div>
-                    <div>{recipe.cookTimeMinutes} min</div>
+                    <div>
+                      <Button
+                        onClick={() => {
+                          invokeAddToListModal(true, id);
+                        }}
+                      >
+                        ADD TO LIST
+                      </Button>
+                    </div>
                   </div>
                 </FontStyled>
               </div>
@@ -130,12 +149,10 @@ export default function DetailRecipeTemplate() {
       <FontStyled variant="sectionTitle">New Feature</FontStyled>
       <Banner
         title="What's in Your Kitchen?"
-        subtitle="New Feature"
+        subtitle="New Feature Coming Soon!"
         description="Enter the ingredients you have, and we’ll match you with delicious recipes you can make right now — no extra shopping needed."
-        buttonText="LEARN MORE"
         image="https://i.gyazo.com/13e9d337fb6332689c870d65959a2882.png"
         alt="Fridge"
-        to="/recommendation"
       />
       <LineDivider />
       <FontStyled variant="sectionTitle">Trending Recipes</FontStyled>

@@ -37,7 +37,7 @@ export default function HeroImage() {
         />
       </div>
       <div>
-        <IonIcon icon={chevronDownOutline}></IonIcon>
+        <IonIcon className="animate-bounce" icon={chevronDownOutline}></IonIcon>
       </div>
     </div>
   );

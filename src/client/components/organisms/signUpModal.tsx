@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import BaseModal from "../organisms/base-modal";
+import BaseModal from "../atoms/base-modal";
 import Button from "../atoms/button";
+import { UserService } from "../../services/user.service";
+import { SignUpResponse } from "../../models/signupdto.model";
+import { useUser } from "../../context/UserContext";
 
 interface SignUpModalProps {
   open: boolean;
@@ -16,11 +19,44 @@ export default function SignUpModal({
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { login } = useUser();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle sign up logic
-    onClose();
+    setIsLoading(true);
+    setError(null);
+
+    const userData = {
+      username,
+      email,
+      password,
+    };
+
+    try {
+      const result: SignUpResponse = await UserService.signUp(userData);
+
+      login(result.user, result.token);
+
+      console.log("Sign up successful:", result);
+
+      setUsername("");
+      setEmail("");
+      setPassword("");
+
+      onClose();
+    } catch (error) {
+      console.error("Sign up failed:", error);
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Sign up failed. Please try again."
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -62,9 +98,17 @@ export default function SignUpModal({
             />
           </label>
         </div>
+        {error && (
+          <div className="text-red-400 text-sm text-center">{error}</div>
+        )}
         <div className="flex flex-col gap-4">
-          <Button type="submit" variant="secondary" className="mt-2">
-            Sign Up
+          <Button
+            type="submit"
+            variant="secondary"
+            className="mt-2"
+            // disabled={isLoading}
+          >
+            {isLoading ? "Signing Up..." : "Sign Up"}
           </Button>
         </div>
         <div className="flex items-center gap-2">
