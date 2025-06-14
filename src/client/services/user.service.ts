@@ -1,4 +1,4 @@
-import { SignUpDto, LoginDto } from "../models/signupdto.model";
+import { SignUpDto, LoginDto, EditUserDto } from "../models/signupdto.model";
 import User from "../models/user.model";
 import { UserRepository } from "../repositories/user.repository";
 
@@ -10,6 +10,11 @@ export const UserService = {
 
   async login(data: LoginDto) {
     const result = await UserRepository.login(data);
+    return result;
+  },
+
+  async editUser(data: EditUserDto) {
+    const result = await UserRepository.update(localStorage.user.id, localStorage.token, data);
     return result;
   },
 
