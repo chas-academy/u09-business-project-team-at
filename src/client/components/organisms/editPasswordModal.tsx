@@ -29,7 +29,11 @@ export default function EditPasswordModal({
     }
 
     try {
-      const result: User = await UserService.editUser(data);
+      const result = await UserService.editUser(data);
+
+      if (!result) {
+        throw new Error;
+      }
 
       login(result, localStorage.token);
 
@@ -76,6 +80,7 @@ export default function EditPasswordModal({
             variant="secondary"
             className="mt-2"
           >
+            Submit
           </Button>
         </div>
       </form>

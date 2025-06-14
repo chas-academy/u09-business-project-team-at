@@ -40,7 +40,7 @@ export const UserRepository = {
   },
 
   async update(id:string, token:string, data: EditUserDto): Promise<User> {
-    const response = await fetch(API_DOMAIN + `api/user/${id}`, {
+    const response = await fetch(API_DOMAIN + `/api/user/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

@@ -3,12 +3,16 @@ import LoginModal from "../components/organisms/loginModal";
 import AddToListModal from "../components/organisms/addtoListModal";
 import CreateAListModal from "../components/organisms/CreateAListModal";
 import SignUpModal from "../components/organisms/signUpModal";
+import EditUsernameModal from "../components/organisms/editUsernameModal";
+import EditPasswordModal from "../components/organisms/editPasswordModal";
 
 interface ModalContextType {
   invokeLoginModal: (value: boolean) => void;
   invokeSignUpModal: (value: boolean) => void;
   invokeAddToListModal: (value: boolean, recipeId?: string) => void;
   invokeCreateAListModal: (value: boolean) => void;
+  invokeEditUsernameModal: (value: boolean) => void;
+  invokeEditPasswordModal: (value: boolean) => void;
 }
 interface ModalProviderProps {
   children: ReactNode;
@@ -23,6 +27,8 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [addToListRecipeId, setAddToListRecipeId] = useState<string | null>(
     null
   );
+  const [showedEditUsernameModal, invokeEditUsernameModal] = useState(false);
+  const [showedEditPasswordModal, invokeEditPasswordModal] = useState(false);
 
   const sharingData = {
     invokeLoginModal,
@@ -32,6 +38,8 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
       setAddToListRecipeId(recipeId ?? null);
     },
     invokeCreateAListModal,
+    invokeEditUsernameModal,
+    invokeEditPasswordModal,
   };
 
   return (
@@ -62,6 +70,18 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
           open={showedAddToListModal}
           onClose={() => invokeAddToListModal(false)}
           recipeId={addToListRecipeId ?? ""}
+        />
+      )}
+      {showedEditUsernameModal && (
+        <EditUsernameModal
+          open={showedEditUsernameModal}
+          onClose={() => invokeEditUsernameModal(false)}
+        />
+      )}
+      {showedEditPasswordModal && (
+        <EditPasswordModal
+          open={showedEditPasswordModal}
+          onClose={() => invokeEditPasswordModal(false)}
         />
       )}
       {showedCreateAListModal && <CreateAListModal />}

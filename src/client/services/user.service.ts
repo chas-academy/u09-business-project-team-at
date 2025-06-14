@@ -14,8 +14,12 @@ export const UserService = {
   },
 
   async editUser(data: EditUserDto) {
-    const result = await UserRepository.update(localStorage.user.id, localStorage.token, data);
-    return result;
+    const user = UserService.getUser();
+    const token = localStorage.getItem("token");
+    if (user?.id && token) {
+      const result = await UserRepository.update(user.id, token, data);
+      return result;
+    }
   },
 
   getUser(): User | null {
