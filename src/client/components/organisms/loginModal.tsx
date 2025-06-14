@@ -61,7 +61,7 @@ export default function LoginModal({
       >
         <div className="flex flex-col gap-4">
           <label className="flex flex-col gap-1 text-white text-base font-bold">
-            Email
+            Username
             <input
               type="text"
               value={username}

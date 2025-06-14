@@ -20,3 +20,9 @@ export interface LoginResponse {
   user: User;
   token: string;
 }
+
+export interface EditUserDto {
+  username?: string;
+  email?: string;
+  password?: string;
+}
