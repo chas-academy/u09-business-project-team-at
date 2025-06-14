@@ -50,7 +50,7 @@ const UserButtons: React.FC<{
       </li>
     );
   }
-  console.log("User has the following data:", user);
+  // console.log("User has the following data:", user);
 
   return (
     <li className="mx-4 my-4 mr-0">
@@ -86,7 +86,7 @@ export default function Header({ variants = "guest" }: HeaderProps) {
   }, [isMobile, menuState]);
 
   const navLinksClasses = "text-base hover:text-[#6DBE45] duration-200";
-  console.log("Header rendered with variants:", variants);
+  // console.log("Header rendered with variants:", variants);
 
   return (
     <header className="bg-black h-24 z-[15]">

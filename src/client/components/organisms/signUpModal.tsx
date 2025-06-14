@@ -40,7 +40,7 @@ export default function SignUpModal({
 
       login(result.user, result.token);
 
-      console.log("Sign up successful:", result);
+      // console.log("Sign up successful:", result);
 
       setUsername("");
       setEmail("");

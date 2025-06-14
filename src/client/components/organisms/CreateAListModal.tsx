@@ -31,7 +31,7 @@ export default function CreateAListModal() {
     );
 
     if (result) {
-      console.log("List created successfully:", result);
+      // console.log("List created successfully:", result);
       window.location.reload();
     } else {
       console.error("Failed to create list");

@@ -29,14 +29,14 @@ export default function LoginModal({
     const loginData: LoginDto = {
       username: username,
       password,
-    }
+    };
 
     try {
       const result: LoginResponse = await UserService.login(loginData);
 
       login(result.user, result.token);
 
-      console.log("Sign in successful:", result);
+      // console.log("Sign in successful:", result);
 
       setUsername("");
       setPassword("");

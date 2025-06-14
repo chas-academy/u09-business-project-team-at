@@ -5,8 +5,8 @@ export const API_DOMAIN =
 
 export const ListRepository = {
   async getAllList(token: string, id: string): Promise<List[]> {
-    console.log(token);
-    console.log(API_DOMAIN + `/api/list/${id}`);
+    // console.log(token);
+    // console.log(API_DOMAIN + `/api/list/${id}`);
     const response = await fetch(API_DOMAIN + `/api/list/${id}`);
     if (!response.ok) {
       throw new Error("Failed to sign up");
@@ -38,7 +38,7 @@ export const ListRepository = {
   },
 
   async createList(token: string, id: string, name: string): Promise<List> {
-    console.log("Creating list with name:", name);
+    // console.log("Creating list with name:", name);
     const response = await fetch(API_DOMAIN + `/api/list/${id}`, {
       method: "POST",
       headers: {
