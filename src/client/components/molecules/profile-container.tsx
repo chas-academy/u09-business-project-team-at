@@ -5,41 +5,15 @@ import { useUser } from "../../context/UserContext";
 
 export default function ProfileContainer() {
   const { user, token, logout } = useUser();
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const checkUserData = async () => {
-      if (!token || !user) {
-        setError("Please log in to view your profile");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        setLoading(true);
-        // Add any profile data fetching here if needed
-        setError(null);
-      } catch (err) {
-        console.error("Error loading profile:", err);
-        setError("Failed to load profile data");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkUserData();
+    if (!token || !user) {
+      setError("Please log in to view your profile");
+      return;
+    }
+    setError(null);
   }, [token, user]);
-
-  if (loading) {
-    return (
-      <div className="flex flex-col w-full">
-        <div className="rounded-lg gap-4 p-4 flex flex-col border border-[#D9D9D9]">
-          <div>Loading profile data...</div>
-        </div>
-      </div>
-    );
-  }
 
   if (error) {
     return (
