@@ -12,7 +12,7 @@ import {
 export const listRouter = Router();
 
 //id param always refers to USER ID!
-listRouter.post("/:id", bodyParser.json(), authorize, createList); //name, desc?
+listRouter.post("/:id", bodyParser.json(), authorize, createList); //name
 
 listRouter.get("/:id", listList);
 
