@@ -22,6 +22,15 @@ export const UserService = {
     }
   },
 
+  async deleteUser() {
+    const user = UserService.getUser();
+    const token = localStorage.getItem("token");
+    if (user?.id && token) {
+      const result = await UserRepository.delete(user.id, token);
+      return result;
+    }
+  },
+
   getUser(): User | null {
     const user = localStorage.getItem("user");
     return user ? JSON.parse(user) : null;

@@ -6,7 +6,7 @@ import { useModal } from "../../context/ModalContext";
 
 export default function ProfileContainer() {
   const { user, token, logout } = useUser();
-  const { invokeEditUsernameModal, invokeEditPasswordModal } = useModal();
+  const { invokeEditUsernameModal, invokeEditPasswordModal, invokeDeleteAccountModal } = useModal();
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function ProfileContainer() {
           <Button className="py-4" variant="transparent" onClick={() => invokeEditPasswordModal(true)}>
             Edit password
           </Button>
-          <Button className="py-4" variant="transparent">
+          <Button className="py-4" variant="transparent" onClick={() => invokeDeleteAccountModal(true)}>
             Delete account
           </Button>
           <Button className="py-4" variant="danger" onClick={logout}>

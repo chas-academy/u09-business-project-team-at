@@ -43,7 +43,7 @@ export default function EditUsernameModal({
 
 			onClose();
 		} catch (error) {
-      console.error("Username change failed:", error);
+      // console.error("Username change failed:", error);
       setError(
         error instanceof Error
           ? error.message
