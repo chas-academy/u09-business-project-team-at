@@ -4,7 +4,7 @@ import FontStyled from "../atoms/font-styling";
 import LineDivider from "../atoms/line-divider";
 import ProfileContainer from "../molecules/profile-container";
 import ListContainer from "../molecules/list-container";
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 
 export default function ProfileTemplate() {
   useEffect(() => {
