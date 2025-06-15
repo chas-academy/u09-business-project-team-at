@@ -52,5 +52,19 @@ export const UserRepository = {
       throw new Error((await response.json()).message);
     }
     return response.json();
-  }
+  },
+
+  async delete(id:string, token:string): Promise<string> {
+    const response = await fetch(API_DOMAIN + `/api/user/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token,
+      },
+    });
+    if (!response.ok) {
+      throw new Error((await response.json()).message);
+    }
+    return (await response.json()).message;
+  },
 };

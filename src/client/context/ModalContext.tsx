@@ -5,6 +5,7 @@ import CreateAListModal from "../components/organisms/CreateAListModal";
 import SignUpModal from "../components/organisms/signUpModal";
 import EditUsernameModal from "../components/organisms/editUsernameModal";
 import EditPasswordModal from "../components/organisms/editPasswordModal";
+import DeleteAccountModal from "../components/organisms/deleteAccountModal";
 
 interface ModalContextType {
   invokeLoginModal: (value: boolean) => void;
@@ -13,6 +14,7 @@ interface ModalContextType {
   invokeCreateAListModal: (value: boolean) => void;
   invokeEditUsernameModal: (value: boolean) => void;
   invokeEditPasswordModal: (value: boolean) => void;
+  invokeDeleteAccountModal: (value: boolean) => void;
 }
 interface ModalProviderProps {
   children: ReactNode;
@@ -29,6 +31,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   );
   const [showedEditUsernameModal, invokeEditUsernameModal] = useState(false);
   const [showedEditPasswordModal, invokeEditPasswordModal] = useState(false);
+  const [showedDeleteAccountModal, invokeDeleteAccountModal] = useState(false);
 
   const sharingData = {
     invokeLoginModal,
@@ -40,6 +43,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
     invokeCreateAListModal,
     invokeEditUsernameModal,
     invokeEditPasswordModal,
+    invokeDeleteAccountModal,
   };
 
   return (
@@ -83,6 +87,12 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
           open={showedEditPasswordModal}
           onClose={() => invokeEditPasswordModal(false)}
         />
+      )}
+      {showedDeleteAccountModal && (
+        <DeleteAccountModal
+          open={showedDeleteAccountModal}
+          onClose={() => invokeDeleteAccountModal(false)}
+        />  
       )}
       {showedCreateAListModal && <CreateAListModal />}
     </ModalContext.Provider>
