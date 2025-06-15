@@ -6,6 +6,7 @@ import SignUpModal from "../components/organisms/signUpModal";
 import EditUsernameModal from "../components/organisms/editUsernameModal";
 import EditPasswordModal from "../components/organisms/editPasswordModal";
 import DeleteAccountModal from "../components/organisms/deleteAccountModal";
+import EditListNameModal from "../components/organisms/editListNameModal";
 
 interface ModalContextType {
   invokeLoginModal: (value: boolean) => void;
@@ -15,6 +16,7 @@ interface ModalContextType {
   invokeEditUsernameModal: (value: boolean) => void;
   invokeEditPasswordModal: (value: boolean) => void;
   invokeDeleteAccountModal: (value: boolean) => void;
+  invokeEditListNameModal: (value: boolean) => void;
 }
 interface ModalProviderProps {
   children: ReactNode;
@@ -26,6 +28,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
   const [showedSignupModal, invokeSignUpModal] = useState(false);
   const [showedAddToListModal, invokeAddToListModal] = useState(false);
   const [showedCreateAListModal, invokeCreateAListModal] = useState(false);
+  const [showedEditListNameModal, invokeEditListNameModal] = useState(false);
   const [addToListRecipeId, setAddToListRecipeId] = useState<string | null>(
     null
   );
@@ -44,6 +47,7 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
     invokeEditUsernameModal,
     invokeEditPasswordModal,
     invokeDeleteAccountModal,
+    invokeEditListNameModal,
   };
 
   return (
@@ -92,9 +96,15 @@ export const ModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
         <DeleteAccountModal
           open={showedDeleteAccountModal}
           onClose={() => invokeDeleteAccountModal(false)}
-        />  
+        />
       )}
       {showedCreateAListModal && <CreateAListModal />}
+      {showedEditListNameModal && (
+        <EditListNameModal
+          open={showedEditListNameModal}
+          onClose={() => invokeEditListNameModal(false)}
+        />
+      )}
     </ModalContext.Provider>
   );
 };
