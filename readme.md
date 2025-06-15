@@ -2,6 +2,10 @@
 
 This codebase provides a convenient way to browse and save recipes
 
+![Demo](demo1.png)
+
+![Demo](demo2.png)
+
 ## Local install
 
 1. Install [Node Package Manager](https://www.npmjs.com/) 
@@ -17,7 +21,5 @@ This codebase provides a convenient way to browse and save recipes
 6. Run `npm run dev`
 
 7. App will be available at [localhost:3000](localhost:3000)
-
-
 
 ## Created by Artemis and Terra
