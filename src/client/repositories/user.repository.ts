@@ -20,7 +20,7 @@ export const UserRepository = {
       body: JSON.stringify(data),
     });
     if (!response.ok) {
-      throw new Error((await response.json()).message);
+      throw new Error((await response.json()).error);
     }
     return response.json();
   },
@@ -34,17 +34,19 @@ export const UserRepository = {
       body: JSON.stringify(data),
     });
     if (!response.ok) {
-      throw new Error((await response.json()).message);
+      const errorResponse = await response.json();
+      console.log(errorResponse);
+      throw new Error(errorResponse.error);
     }
     return response.json();
   },
 
-  async update(id:string, token:string, data: EditUserDto): Promise<User> {
+  async update(id: string, token: string, data: EditUserDto): Promise<User> {
     const response = await fetch(API_DOMAIN + `/api/user/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": token,
+        Authorization: token,
       },
       body: JSON.stringify(data),
     });
@@ -54,12 +56,12 @@ export const UserRepository = {
     return response.json();
   },
 
-  async delete(id:string, token:string): Promise<string> {
+  async delete(id: string, token: string): Promise<string> {
     const response = await fetch(API_DOMAIN + `/api/user/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": token,
+        Authorization: token,
       },
     });
     if (!response.ok) {
