@@ -1,25 +1,85 @@
-# Readme
+# Recipe Explorer 🍳
 
-This codebase provides a convenient way to browse and save recipes
+A modern web application for browsing, saving, and managing your favorite recipes. Built with React, Node.js, and MongoDB.
 
-![Demo](demo1.png)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://u09-business-project-team-at.onrender.com/)
 
-![Demo](demo2.png)
+## ✨ Features
 
-## Local install
+- Browse a collection of delicious recipes
+- Save your favorite recipes for later
+- User-friendly interface
+- Responsive design for all devices
+- Secure user authentication
+- MongoDB database integration
 
-1. Install [Node Package Manager](https://www.npmjs.com/) 
+## 🖼️ Screenshots
 
-2. Create a [MongoDB](https://www.mongodb.com/) cluster
+![Recipe Explorer Homepage](demo1.png)
+![Recipe Details View](demo2.png)
 
-3. Clone this repository to a location of your choice
+## 🚀 Getting Started
 
-4. Run `npm install` and `cp .env.example .env` in your cloned repository
+### Prerequisites
 
-5. Put your MongoDB database user credentials in the .env file
+- [Node.js](https://nodejs.org/) (v14 or higher)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
+- [MongoDB](https://www.mongodb.com/) account
 
-6. Run `npm run dev`
+### Installation
 
-7. App will be available at [localhost:3000](localhost:3000)
+1. Clone the repository
 
-## Created by Artemis and Terra
+   ```bash
+   git clone https://github.com/chas-academy/u09-business-project-team-at.git
+   cd u09-business-project-team-at
+
+   ```
+
+2. Install dependencies
+
+   ```bash
+   npm install
+   ```
+
+3. Set up environment variables
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Edit the `.env` file with your MongoDB credentials:
+
+   ```
+   MONGODB_URI=your_mongodb_connection_string
+   ```
+
+4. Start the development server
+
+   ```bash
+   npm run dev
+   ```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## 🛠️ Tech Stack
+
+- Frontend: React.js
+- Backend: Node.js
+- Database: MongoDB
+- Authentication: JWT
+- Styling: CSS/SCSS
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 👥 Authors
+
+- **Artemis** - _Initial work_
+- **Terra** - _Initial work_
+
+## 🔗 Links
+
+- [Live Demo](https://u09-business-project-team-at.onrender.com/)
+- [Kanban Board](https://github.com/orgs/chas-academy/projects/189)
