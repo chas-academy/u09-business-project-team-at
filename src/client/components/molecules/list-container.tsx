@@ -80,7 +80,7 @@ export default function ListContainer() {
         </FontStyled>
         <div className="rounded-lg border border-[#D9D9D9] w-full">
           <div className="flex flex-col items-center justify-stretch p-4 gap-4 max-h-67  w-full ">
-            <div className="flex flex-col gap-2 w-full scroll-smooth overflow-y-scroll">
+            <div className="flex flex-col gap-2 w-full scroll-smooth overflow-y-scroll h-67">
               {lists.length === 0 ? (
                 <div>You don't have any lists yet</div>
               ) : (

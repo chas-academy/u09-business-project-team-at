@@ -13,8 +13,8 @@ import Wrapper from "./components/templates/wrapper";
 function App() {
   return (
     <UserProvider>
-      <ModalProvider>
-        <Router>
+      <Router>
+        <ModalProvider>
           <Wrapper>
             <Header variants="guest" />
             <Routes>
@@ -28,8 +28,8 @@ function App() {
               <Route path="*" element={<Home />} />
             </Routes>
           </Wrapper>
-        </Router>
-      </ModalProvider>
+        </ModalProvider>
+      </Router>
     </UserProvider>
   );
 }

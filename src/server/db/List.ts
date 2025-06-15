@@ -18,6 +18,12 @@ export class List extends TimeStamps implements Base {
 
   @prop({ type: () => [String] })
   public recipes: string[] = [];
+
+  @prop({ type: Boolean, default: false })
+  public isDeleted!: boolean;
+
+  @prop({ type: Date })
+  public deletedAt?: Date;
 }
 
 export const ListModel = getModelForClass(List);

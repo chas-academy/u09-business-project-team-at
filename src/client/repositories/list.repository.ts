@@ -18,7 +18,6 @@ export const ListRepository = {
     token: string,
     id: string,
     listId: string,
-    recipeId: string,
     list: List
   ): Promise<List> {
     const response = await fetch(API_DOMAIN + `/api/list/${id}/${listId}`, {
@@ -28,11 +27,31 @@ export const ListRepository = {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        recipes: [...list.recipes, recipeId],
+        recipes: list.recipes,
       }),
     });
     if (!response.ok) {
       throw new Error("Failed to update list");
+    }
+    return response.json();
+  },
+
+  async updateListName(
+    token: string,
+    id: string,
+    listId: string,
+    name: string
+  ): Promise<List> {
+    const response = await fetch(API_DOMAIN + `/api/list/${id}/${listId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ name }),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to update list name");
     }
     return response.json();
   },
@@ -63,5 +82,21 @@ export const ListRepository = {
       throw new Error("Failed to fetch list by ID");
     }
     return response.json();
+  },
+
+  async deleteList(
+    token: string,
+    userId: string,
+    listId: string
+  ): Promise<void> {
+    const response = await fetch(API_DOMAIN + `/api/list/${userId}/${listId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Failed to delete list");
+    }
   },
 };

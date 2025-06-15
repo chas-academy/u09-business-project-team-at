@@ -58,13 +58,10 @@ export default function AddToListModal({
     }
 
     try {
-      await ListService.updateList(
-        token ?? "",
-        user?.id ?? "",
-        listId,
-        recipeId,
-        list
-      );
+      await ListService.updateList(token ?? "", user?.id ?? "", listId, {
+        ...list,
+        recipes: [...list.recipes, recipeId],
+      });
       onClose();
     } catch (error) {
       console.error("Error adding recipe to list:", error);

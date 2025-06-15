@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useModal } from "../../context/ModalContext";
 import { useUser } from "../../context/UserContext";
 import { ListService } from "../../services/list.service";
@@ -7,6 +8,7 @@ import Button from "../atoms/button";
 export default function CreateAListModal() {
   const { invokeCreateAListModal, invokeLoginModal } = useModal();
   const { user, token } = useUser();
+  const [error, setError] = useState<string | null>(null);
 
   if (!user || !token) {
     invokeLoginModal(true);
@@ -17,24 +19,32 @@ export default function CreateAListModal() {
   const handleOnSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    invokeCreateAListModal(false);
     e.stopPropagation();
+    try {
+      const result = await ListService.createList(
+        token,
+        user.id,
+        (
+          (e.target as HTMLFormElement).elements.namedItem(
+            "name"
+          ) as HTMLInputElement
+        )?.value
+      );
 
-    const result = await ListService.createList(
-      token,
-      user.id,
-      (
-        (e.target as HTMLFormElement).elements.namedItem(
-          "name"
-        ) as HTMLInputElement
-      )?.value
-    );
-
-    if (result) {
-      // console.log("List created successfully:", result);
-      window.location.reload();
-    } else {
-      console.error("Failed to create list");
+      if (result) {
+        // console.log("List created successfully:", result);
+        invokeCreateAListModal(false);
+        window.location.reload();
+      } else {
+        console.error("Failed to create list");
+      }
+    } catch (error) {
+      setError(
+        error instanceof Error
+          ? error.message
+          : "Failed to create list. Please try again."
+      );
+      return;
     }
   };
 
@@ -59,6 +69,7 @@ export default function CreateAListModal() {
             required
             name="name"
           />
+          {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
           <div className="flex gap-1 mt-4">
             <Button
               className="py-4"

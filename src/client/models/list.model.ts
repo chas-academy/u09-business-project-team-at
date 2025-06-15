@@ -3,4 +3,6 @@ export interface List {
   recipes: string[];
   name: string;
   description: string;
+  isDeleted?: boolean;
+  deletedAt?: Date;
 }
