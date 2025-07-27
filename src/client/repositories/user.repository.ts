@@ -69,4 +69,20 @@ export const UserRepository = {
     }
     return (await response.json()).message;
   },
+
+  async oauth(token: string): Promise<LoginResponse> {
+    const reqBody = { token:token }
+    const response = await fetch(API_DOMAIN + "/api/user/oauth", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reqBody),
+    });
+    console.log(response);
+    if (!response.ok) {
+      throw new Error((await response.json()).error);
+    }
+    return response.json();
+  }
 };

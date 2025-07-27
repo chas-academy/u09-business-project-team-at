@@ -27,8 +27,11 @@ export class User extends TimeStamps implements Base {
   @prop({ required: true, type: String })
   public email!: string;
 
-  @prop({ required: true, type: String })
+  @prop({ type: String })
   public password?: string;
+
+  @prop({ type: String })
+  public googleID?: string;
 
   @prop({ type: String })
   public salt?: string;

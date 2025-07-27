@@ -13,6 +13,7 @@ export const authorize = async (
   next: NextFunction
 ) => {
   try {
+    console.log("why")
     const token = req.header("Authorization")?.replace("Bearer ", "");
     if (!token) {
       res.status(401).end();

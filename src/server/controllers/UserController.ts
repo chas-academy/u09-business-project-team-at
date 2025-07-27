@@ -1,14 +1,18 @@
 import { Request, Response } from "express"
-import { UserModel } from "../db/User.ts";
+import { User, UserModel } from "../db/User.ts";
 import { HttpError, handleHttpError } from "../HttpError.js";
 import { createHash } from "crypto";
 import jwt from "jsonwebtoken";
 import { load } from "ts-dotenv";
 import { ListModel } from "../db/List.ts";
+import { OAuth2Client } from "google-auth-library";
 
 const env = load({
-    JWT_SECRET:String
+    JWT_SECRET:String,
+    VITE_GOOGLE_OAUTH_CLIENT:String,
 })
+
+const authClient = new OAuth2Client();
 
 export const createUser = async (req:Request, res:Response) => {
     try {
@@ -23,6 +27,9 @@ export const createUser = async (req:Request, res:Response) => {
         }
         if (await UserModel.exists({ "username": newUser.username })) {
             throw new HttpError(400, "Username already exists");
+        }
+        if (await UserModel.exists({ "email": newUser.email })) {
+            throw new HttpError(400, "Email already in use" );
         }
 
         await newUser.save();
@@ -99,4 +106,40 @@ export const deleteUser = async (req:Request, res:Response) => {
         handleHttpError(e, res);
     }
 };
+
+export const googleOAuth = async (req:Request, res:Response) => {
+    try {
+        const ticket = await authClient.verifyIdToken({
+            idToken: req.body.token,
+            audience: env.VITE_GOOGLE_OAUTH_CLIENT,
+        });
+        const payload = ticket.getPayload();
+        if (payload) {
+            if (await UserModel.exists({ "googleID":payload["sub"] })) {
+                const user = await UserModel.findOne({ "googleID":payload["sub"] }).orFail();
+                const token = jwt.sign({ sub: user._id }, env.JWT_SECRET, { expiresIn: "8h" });
+                res.status(200).json({ token: token, user: user.toJSON() }).end();
+            } else if (await UserModel.exists({ "email":payload["email"] })) {
+                const user = await UserModel.findOne({ "email":payload["email"] }).orFail();
+                user.googleID = payload["sub"];
+                await user.save();
+                const token = jwt.sign({ sub: user._id }, env.JWT_SECRET, { expiresIn: "8h" });
+                res.status(200).json({ token: token, user: user.toJSON() }).end();
+            } else {
+                const newUser = new UserModel({
+                    username:payload["name"],
+                    email:payload["email"],
+                    googleID:payload["sub"],
+                });
+                await newUser.save();
+
+                const token = jwt.sign({ sub: newUser._id }, env.JWT_SECRET, { expiresIn: "8h" });
+                res.status(201).json({ token: token, user: newUser.toJSON() }).end();
+            }
+        }
+    } catch (e) {
+        console.log(e);
+        handleHttpError(e, res);
+    }
+}
 
