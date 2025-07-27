@@ -40,4 +40,9 @@ export const UserService = {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
   },
+
+  async oauth(GoogleToken:string) {
+    const result = await UserRepository.oauth(GoogleToken);
+    return result;
+  }
 };

@@ -4,6 +4,8 @@ import Button from "../atoms/button";
 import { LoginDto, LoginResponse } from "../../models/signupdto.model";
 import { UserService } from "../../services/user.service";
 import { useUser } from "../../context/UserContext";
+import { GoogleLogin } from "@react-oauth/google";
+import { UserRepository } from "../../repositories/user.repository";
 
 interface LoginModalProps {
   open: boolean;
@@ -97,7 +99,20 @@ export default function LoginModal({
           <span className="text-xs font-bold">or</span>
           <div className="h-px flex-1 bg-white"></div>
         </div>
-
+        <GoogleLogin
+          onSuccess={async credentialResponse => {
+            if (credentialResponse.credential) {
+              const result: LoginResponse = await UserService.oauth(credentialResponse.credential);
+              login(result.user, result.token);
+              onClose()
+            }
+          }}
+        />
+        <div className="flex items-center gap-2">
+          <div className="h-px flex-1 bg-white"></div>
+          <span className="text-xs font-bold">or</span>
+          <div className="h-px flex-1 bg-white"></div>
+        </div>
         <div className="flex flex-col items-center font-bold">
           <span>Don't have an account yet?</span>
           <a
